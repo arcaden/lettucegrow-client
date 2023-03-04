@@ -50,8 +50,8 @@ const RecordTable = () => {
     <table>
       <thead>
         <tr>
-          <th>ID</th>
           <th>Name</th>
+          <th>pH</th>
           <th>Action</th>
         </tr>
       </thead>
