@@ -10,6 +10,9 @@ export const podsSlice = createSlice({
   reducers: {
     setPods: (state, action) => {
       state.pods = action.payload
+      if (state.activePodId = null) {
+        state.activePodId = state.pods[0].id
+      }
     },
     addPod: (state, action) => {
       state.pods.push(action.payload);
@@ -29,7 +32,7 @@ export const podsSlice = createSlice({
   },
 });
 
-export const { setPods, addPod, updatePod, deletePod } = podsSlice.actions;
+export const { setPods, addPod, updatePod, deletePod, toggleActive } = podsSlice.actions;
 
 
 export const getPods = () => async (dispatch, getState) => {
@@ -47,11 +50,11 @@ export const getPods = () => async (dispatch, getState) => {
   }
 };
 
-export const getPodPods = (pod_id) => async (dispatch, getState) => {
+export const getGardenPods = (garden_id) => async (dispatch, getState) => {
   try {
     console.log(getState())
     const { auth } = getState();
-    const response = await axios.get(`http://localhost:3001/pods/${pod_id}`, {
+    const response = await axios.get(`http://localhost:3001/pods/${garden_id}`, {
       headers: {
         Authorization: `Bearer ${auth.token}`,
       },

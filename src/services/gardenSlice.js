@@ -26,7 +26,6 @@ export const { setGardens, addGarden, updateGarden, deleteGarden } = gardensSlic
 
 export const getGardens = () => async (dispatch, getState) => {
   try {
-    console.log(getState())
     const { auth } = getState();
     const response = await axios.get('http://localhost:3001/gardens/', {
       headers: {
