@@ -145,7 +145,7 @@ const CreateRecordForm = () => {
         dispatch(createRecord({
             ...formData,
             images: files
-        }, pods.activePodId));
+        }));
     };
 
     const pods = useSelector((state) => state.pods);

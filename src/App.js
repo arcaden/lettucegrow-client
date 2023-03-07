@@ -12,6 +12,7 @@ function App() {
     <div className="App">
       <AppProvider>
         <LoginForm />
+        <CreateRecordForm />
       </AppProvider>
     </div>
   );
