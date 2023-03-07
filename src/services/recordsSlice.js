@@ -54,10 +54,10 @@ export const getPodRecords = (pod_id) => async (dispatch, getState) => {
   }
 };
 
-export const createRecord = (record) => async (dispatch, getState) => {
+export const createRecord = (record, pod_id) => async (dispatch, getState) => {
   try {
     const { auth } = getState();
-    const response = await axios.post('/api/records', { record }, {
+    const response = await axios.post(`http://localhost:3001/records/${pod_id}`, { record }, {
       headers: {
         Authorization: `Bearer ${auth.token}`,
       },

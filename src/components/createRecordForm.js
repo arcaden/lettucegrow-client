@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createRecord } from '../services/recordsSlice';
-import { Form, FormLayout, TextField, Button, DropZone, LegacyStack, Thumbnail, Text, Banner, List } from '@shopify/polaris';
+import { Form, FormLayout, TextField, Button, DropZone, LegacyStack, Thumbnail, Text } from '@shopify/polaris';
 
 
 const CreateRecordForm = () => {
@@ -23,7 +23,90 @@ const CreateRecordForm = () => {
 
     const [files, setFiles] = useState([]);
     const [rejectedFiles, setRejectedFiles] = useState([]);
-    const hasError = rejectedFiles.length > 0;
+
+    const handleNameChange = (event) => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          name: event,
+        }));
+      };
+
+    const handleStartPhChange = (event) => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          start_ph: event,
+        }));
+      };
+    
+      const handleEndPhChange = (event) => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          end_ph: event,
+        }));
+      };
+    
+      const handleStartEcChange = (event) => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          start_ec: event,
+        }));
+      };
+    
+      const handleEndEcChange = (event) => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          end_ec: event,
+        }));
+      };
+    
+      const handlePhUpChange = (event) => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ph_up: event,
+        }));
+      };
+    
+      const handlePhDownChange = (event) => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ph_down: event,
+        }));
+      };
+    
+      const handleStartPpmChange = (event) => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          start_ppm: event,
+        }));
+      };
+    
+      const handleEndPpmChange = (event) => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          end_ppm: event,
+        }));
+      };
+    
+      const handleWaterChange = (event) => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          water: event,
+        }));
+      };
+    
+      const handleTemperatureChange = (event) => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          temperature: event,
+        }));
+      };
+    
+      const handleNoteChange = (event) => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          note: event,
+        }));
+      };
 
     const handleDrop = useCallback(
         (_droppedFiles, acceptedFiles, rejectedFiles) => {
@@ -57,25 +140,18 @@ const CreateRecordForm = () => {
 
     const dispatch = useDispatch();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event, pods) => {
         event.preventDefault();
         dispatch(createRecord({
             ...formData,
             images: files
-        }));
+        }, pods.activePodId));
     };
 
-    const handleChange = (event) => {
-        const { name, value, type } = event.target;
-        const newValue = type === 'file' ? event.target.files[0] : value;
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: newValue,
-        }));
-    };
+    const pods = useSelector((state) => state.pods);
 
     return (
-        <Form onSubmit={handleSubmit} implicitSubmit={false}>
+        <Form onSubmit={() => handleSubmit} implicitSubmit={false}>
             <FormLayout>
                 <LegacyStack vertical>
                     <DropZone accept="image/*" type="image" onDrop={handleDrop}>
@@ -85,7 +161,7 @@ const CreateRecordForm = () => {
                 </LegacyStack>
                 <TextField
                     value={formData.name}
-                    onChange={handleChange}
+                    onChange={handleNameChange}
                     label="Entered By"
                     type="text"
                     helpText={
@@ -97,50 +173,50 @@ const CreateRecordForm = () => {
 
                 <TextField
                     value={formData.start_ph}
-                    onChange={handleChange}
+                    onChange={handleStartPhChange}
                     label="Start pH"
                     type="text"
                 />
 
                 <TextField
                     value={formData.end_ph}
-                    onChange={handleChange}
+                    onChange={handleEndPhChange}
                     label="End pH"
                     type="text"
                 />
                 <TextField
                     value={formData.ph_up}
-                    onChange={handleChange}
+                    onChange={handlePhUpChange}
                     label="pH Up"
                     type="text"
                 />
                 <TextField
                     value={formData.ph_down}
-                    onChange={handleChange}
+                    onChange={handlePhDownChange}
                     label="pH down"
                     type="text"
                 />
                 <TextField
                     value={formData.start_ppm}
-                    onChange={handleChange}
+                    onChange={handleStartPpmChange}
                     label="start PPM"
                     type="text"
                 />
                 <TextField
                     value={formData.end_ppm}
-                    onChange={handleChange}
+                    onChange={handleEndPpmChange}
                     label="end PPM"
                     type="text"
                 />
                 <TextField
                     value={formData.water}
-                    onChange={handleChange}
+                    onChange={handleWaterChange}
                     label="H2O"
                     type="text"
                 />
                 <TextField
                     value={formData.temperature}
-                    onChange={handleChange}
+                    onChange={handleTemperatureChange}
                     label="Temperature"
                     type="text"
                 />

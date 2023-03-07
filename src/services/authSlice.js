@@ -4,7 +4,7 @@ import axios from 'axios'
 export const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    token: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxYTA0Y2NhNS1lZDJjLTQ1OTgtOTQ0Yi1mYWFmYzFmY2IyYzQiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2Nzc3MzQ4MTUsImV4cCI6MTY3NzczODQxNSwianRpIjoiMTNjZjhkZTAtMjdhMC00ZjMxLWI5MzAtMTAzNGRmZjRjOTlkIn0.WyAHP7CoS42wXC_sxuE3vWMxZ_eBHHM5vNPNOBxBQEs",
+    token: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3NzQ4MjhhNy1hOTc1LTQ4MzYtYjFmNS1hYjIyN2ExZTU4M2UiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2NzgwNjA1NjUsImV4cCI6MTY3ODA2NDE2NSwianRpIjoiYzRlZWFiMDMtODNkZC00MTJkLWIxN2QtNzEwYzkwODIyYWM3In0.NnxcSFtNOPf9qs3c06zAEDb1Kz6ZXT1bmaPIcA86e54",
     loading: false,
     error: null
   },
