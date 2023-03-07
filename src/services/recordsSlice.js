@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const recordsSlice = createSlice({
-  record: 'records',
+  name: 'records',
   initialState: [],
   reducers: {
     setRecords: (state, action) => action.payload,
