@@ -13,7 +13,6 @@ function App() {
     <div className="App">
       <AppProvider>
         <LoginForm />
-        <PodContainer />
       </AppProvider>
     </div>
   );
