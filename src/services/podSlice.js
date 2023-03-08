@@ -41,7 +41,7 @@ export const getPods = () => async (dispatch, getState) => {
     const { auth } = getState();
     const response = await axios.get('http://localhost:3001/pods/', {
       headers: {
-        Authorization: `Bearer ${auth.token}`,
+        Authorization: `${auth.token}`,
       },
     });
     dispatch(setPods(response.data));
@@ -52,11 +52,11 @@ export const getPods = () => async (dispatch, getState) => {
 
 export const getGardenPods = (garden_id) => async (dispatch, getState) => {
   try {
-    console.log(getState())
     const { auth } = getState();
-    const response = await axios.get(`http://localhost:3001/pods/${garden_id}`, {
+    const { gardens } = getState();
+    const response = await axios.get(`http://localhost:3001/pods/${gardens.id}`, {
       headers: {
-        Authorization: `Bearer ${auth.token}`,
+        Authorization: `${auth.token}`,
       },
     });
     dispatch(setPods(response.data));
@@ -70,7 +70,7 @@ export const createPod = (body) => async (dispatch, getState) => {
     const { auth } = getState();
     const response = await axios.post('/api/pods', { body }, {
       headers: {
-        Authorization: `Bearer ${auth.token}`,
+        Authorization: `${auth.token}`,
       },
     });
     dispatch(addPod(response.data));
@@ -84,7 +84,7 @@ export const updatePodById = (id, name) => async (dispatch, getState) => {
     const { auth } = getState();
     const response = await axios.put(`/api/pods/${id}`, { name }, {
       headers: {
-        Authorization: `Bearer ${auth.token}`,
+        Authorization: `${auth.token}`,
       },
     });
     dispatch(updatePod(response.data));

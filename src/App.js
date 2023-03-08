@@ -5,6 +5,7 @@ import RecordTable from './containers/recordTable';
 import CreateRecordForm from './components/createRecordForm';
 import { AppProvider } from '@shopify/polaris';
 import '@shopify/polaris/build/esm/styles.css';
+import PodContainer from './containers/podContainer';
 
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
     <div className="App">
       <AppProvider>
         <LoginForm />
-        <CreateRecordForm />
+        <PodContainer />
       </AppProvider>
     </div>
   );

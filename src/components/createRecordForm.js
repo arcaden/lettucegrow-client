@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createRecord } from '../services/recordsSlice';
-import { Form, FormLayout, TextField, Button, DropZone, LegacyStack, Thumbnail, Text } from '@shopify/polaris';
+import { Form, FormLayout, TextField, Button, DropZone, LegacyStack, Thumbnail, Text, Select } from '@shopify/polaris';
 
 
 const CreateRecordForm = () => {
@@ -24,89 +24,100 @@ const CreateRecordForm = () => {
     const [files, setFiles] = useState([]);
     const [rejectedFiles, setRejectedFiles] = useState([]);
 
+    const [selected, setSelected] = useState('today');
+
+    const handleSelectChange = useCallback((value) => setSelected(value), []);
+  
+    const options = [
+      {label: 'Today', value: 'today'},
+      {label: 'Yesterday', value: 'yesterday'},
+      {label: 'Last 7 days', value: 'lastWeek'},
+    ];
+  
+
     const handleNameChange = (event) => {
         setFormData((prevFormData) => ({
-          ...prevFormData,
-          name: event,
+            ...prevFormData,
+            name: event,
         }));
-      };
+    };
 
     const handleStartPhChange = (event) => {
         setFormData((prevFormData) => ({
-          ...prevFormData,
-          start_ph: event,
+            ...prevFormData,
+            start_ph: event,
         }));
-      };
-    
-      const handleEndPhChange = (event) => {
+    };
+
+    const handleEndPhChange = (event) => {
         setFormData((prevFormData) => ({
-          ...prevFormData,
-          end_ph: event,
+            ...prevFormData,
+            end_ph: event,
         }));
-      };
-    
-      const handleStartEcChange = (event) => {
+    };
+
+    const handleStartEcChange = (event) => {
         setFormData((prevFormData) => ({
-          ...prevFormData,
-          start_ec: event,
+            ...prevFormData,
+            start_ec: event,
         }));
-      };
-    
-      const handleEndEcChange = (event) => {
+    };
+
+    const handleEndEcChange = (event) => {
         setFormData((prevFormData) => ({
-          ...prevFormData,
-          end_ec: event,
+            ...prevFormData,
+            end_ec: event,
         }));
-      };
-    
-      const handlePhUpChange = (event) => {
+    };
+
+    const handlePhUpChange = (event) => {
         setFormData((prevFormData) => ({
-          ...prevFormData,
-          ph_up: event,
+            ...prevFormData,
+            ph_up: event,
         }));
-      };
-    
-      const handlePhDownChange = (event) => {
+    };
+
+    const handlePhDownChange = (event) => {
         setFormData((prevFormData) => ({
-          ...prevFormData,
-          ph_down: event,
+            ...prevFormData,
+            ph_down: event,
         }));
-      };
-    
-      const handleStartPpmChange = (event) => {
+    };
+
+    const handleStartPpmChange = (event) => {
         setFormData((prevFormData) => ({
-          ...prevFormData,
-          start_ppm: event,
+            ...prevFormData,
+            start_ppm: event,
         }));
-      };
-    
-      const handleEndPpmChange = (event) => {
+    };
+
+    const handleEndPpmChange = (event) => {
         setFormData((prevFormData) => ({
-          ...prevFormData,
-          end_ppm: event,
+            ...prevFormData,
+            end_ppm: event,
         }));
-      };
-    
-      const handleWaterChange = (event) => {
+    };
+
+    const handleWaterChange = (event) => {
         setFormData((prevFormData) => ({
-          ...prevFormData,
-          water: event,
+            ...prevFormData,
+            water: event,
         }));
-      };
-    
-      const handleTemperatureChange = (event) => {
+    };
+
+    const handleTemperatureChange = (event) => {
         setFormData((prevFormData) => ({
-          ...prevFormData,
-          temperature: event,
+            ...prevFormData,
+            temperature: event,
         }));
-      };
-    
-      const handleNoteChange = (event) => {
+    };
+
+    const handleNoteChange = (event) => {
         setFormData((prevFormData) => ({
-          ...prevFormData,
-          note: event,
+            ...prevFormData,
+            note: event,
         }));
-      };
+    };
 
     const handleDrop = useCallback(
         (_droppedFiles, acceptedFiles, rejectedFiles) => {
@@ -219,6 +230,13 @@ const CreateRecordForm = () => {
                     onChange={handleTemperatureChange}
                     label="Temperature"
                     type="text"
+                />
+
+                <Select
+                    label="Date range"
+                    options={options}
+                    onChange={handleSelectChange}
+                    value={selected}
                 />
                 <Button submit>Submit</Button>
             </FormLayout>

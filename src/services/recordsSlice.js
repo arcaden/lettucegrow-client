@@ -30,7 +30,7 @@ export const getRecords = () => async (dispatch, getState) => {
     const { auth } = getState();
     const response = await axios.get('http://localhost:3001/records/1', {
       headers: {
-        Authorization: `Bearer ${auth.token}`,
+        Authorization: `${auth.token}`,
       },
     });
     dispatch(setRecords(response.data));
@@ -45,7 +45,7 @@ export const getPodRecords = (pod_id) => async (dispatch, getState) => {
     const { auth } = getState();
     const response = await axios.get(`http://localhost:3001/records/${pod_id}`, {
       headers: {
-        Authorization: `Bearer ${auth.token}`,
+        Authorization: `${auth.token}`,
       },
     });
     dispatch(setRecords(response.data));
@@ -60,7 +60,7 @@ export const createRecord = (record, pod_id) => async (dispatch, getState) => {
     const { pods } = getState();
     const response = await axios.post(`http://localhost:3001/records/${pods.activePodId}`, { record }, {
       headers: {
-        Authorization: `Bearer ${auth.token}`,
+        Authorization: `${auth.token}`,
       },
     });
     dispatch(addRecord(response.data));
@@ -74,7 +74,7 @@ export const updateRecordById = (id, record) => async (dispatch, getState) => {
     const { auth } = getState();
     const response = await axios.put(`/api/records/${id}`, { record }, {
       headers: {
-        Authorization: `Bearer ${auth.token}`,
+        Authorization: `${auth.token}`,
       },
     });
     dispatch(updateRecord(response.data));
@@ -88,7 +88,7 @@ export const deleteRecordById = (id) => async (dispatch, getState) => {
     const { auth } = getState();
     const response = await axios.delete(`/api/records/${id}`, {
       headers: {
-        Authorization: `Bearer ${auth.token}`,
+        Authorization: `${auth.token}`,
       },
     });
     dispatch(deleteRecord(response.data));
