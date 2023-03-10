@@ -10,7 +10,7 @@ export const podsSlice = createSlice({
   reducers: {
     setPods: (state, action) => {
       state.pods = action.payload
-      if (state.activePodId = null) {
+      if (state.activePodId === null) {
         state.activePodId = state.pods[0].id
       }
     },

@@ -8,7 +8,8 @@ import { getGardens, loadInitalState } from '../services/gardenSlice';
 
 const PodContainer = () => {
   const dispatch = useDispatch();
-  const pods = useSelector((state) => state.pods);
+  const pods = useSelector((state) => state.pods.pods);
+  const activePodId = useSelector((state) => state.activePodId);
   const measurements = useSelector((state => state.measurements))
 
   useEffect(() => {
@@ -33,6 +34,10 @@ const PodContainer = () => {
 
   const phMeasurements = measurements.filter(measurement => {
     return measurement.measurement_type === "ph";
+  });
+
+  const active_pod = pods.filter(pod => {
+    return pod.id === activePodId;
   });
 
   const handleGetGardens = () => {
@@ -63,16 +68,44 @@ const PodContainer = () => {
     }
   }
 
+  function ecRangeDisplayValue() {
+    console.log(active_pod)
+    if (active_pod.length === 0) {
+      return <p> Please Refresh Value </p>
+    } else {
+      return (
+        <div>
+          {active_pod}
+        </div>)
+    }
+  }
+
+  function phRangeDisplayValue() {
+    console.log(active_pod)
+    if (active_pod.length === 0) {
+      return <p> Please Refresh Value </p>
+    } else {
+      return (
+        <div>
+          {active_pod}
+        </div>)
+    }
+  }
+
+
+
   return (
     <LegacyStack>
       <LegacyCard title="Garden pH" sectioned>
         <p> Current pH </p>
         {phDisplayValue()}
+        {phRangeDisplayValue()}
       </LegacyCard>
 
       <LegacyCard title="Garden PPM" sectioned>
         <p> Current EC </p>
         {ecDisplayValue()}
+        {ecRangeDisplayValue()}
       </LegacyCard>
       <Button onClick={handleGetGardens}> Pull measurements </Button>
     </LegacyStack>
