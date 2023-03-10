@@ -8,6 +8,7 @@ import '@shopify/polaris/build/esm/styles.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PodContainer from './containers/podContainer';
 import RecordTableContainer from './components/recordTableContainer';
+import ProtectedRoute from './utils/ProtectedRoute';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<LoginForm/>} />
-            <Route path="/" element={<RecordTableContainer/>} />
+            <Route path="/" element={<PodContainer />} />
           </Routes>
         </BrowserRouter>
       </AppProvider>

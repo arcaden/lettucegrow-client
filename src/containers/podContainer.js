@@ -12,6 +12,7 @@ const PodContainer = () => {
   const measurements = useSelector((state => state.measurements))
 
   useEffect(() => {
+    console.log("Test")
     dispatch(loadInitalState());
   }, [dispatch]);
 
@@ -34,25 +35,45 @@ const PodContainer = () => {
   const phMeasurements = measurements.filter(measurement => {
     return measurement.measurement_type === "ph";
   });
-  
-    console.log(measurements)
 
   const handleGetGardens = () => {
     dispatch(loadInitalState());
   };
 
+  function phDisplayValue() {
+    if (phMeasurements.length === 0) {
+      return <p> Please Refresh Value </p>
+    } else {
+      return (
+        <div>
+          <p> {phMeasurements[0].value} </p>
+          <p> Measured at {phMeasurements[0].created_at} </p>
+        </div>)
+    }
+  }
+
+  function ecDisplayValue() {
+    if (ecMeasurements.length === 0) {
+      return <p> Please Refresh Value </p>
+    } else {
+      return (
+        <div>
+          <p> {ecMeasurements[0].value} </p>
+          <p> Measured at {ecMeasurements[0].created_at} </p>
+        </div>)
+    }
+  }
 
   return (
     <LegacyStack>
       <LegacyCard title="Garden pH" sectioned>
-      <p> Current pH </p>
-        <p> {phMeasurements[0].value} </p>
-        <p> Measured at {phMeasurements[0].created_at } </p>      </LegacyCard>
+        <p> Current pH </p>
+        {phDisplayValue()}
+      </LegacyCard>
 
       <LegacyCard title="Garden PPM" sectioned>
         <p> Current EC </p>
-        <p> {ecMeasurements[0].value} </p>
-        <p> Measured at {ecMeasurements[0].created_at } </p>
+        {ecDisplayValue()}
       </LegacyCard>
       <Button onClick={handleGetGardens}> Pull measurements </Button>
     </LegacyStack>
