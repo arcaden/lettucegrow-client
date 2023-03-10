@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import Constants from '../constants';
 import { setMeasurements } from './measurementSlice';
 import { setPods } from './podSlice';
 
@@ -38,7 +39,7 @@ export const { setGardens, addGarden, updateGarden, deleteGarden } = gardensSlic
 export const getGardens = () => async (dispatch, getState) => {
     try {
         const { auth } = getState();
-        const response = await axios.get('http://localhost:3001/gardens', {
+        const response = await axios.get(Constants.NGROK_URL + '/gardens', {
             headers: {
                 Authorization: `${auth.token}`,
             },
@@ -53,19 +54,19 @@ export const loadInitalState = () => async (dispatch, getState) => {
     try {
         const { auth } = getState();
 
-        const garden_response = await axios.get('http://localhost:3001/gardens', {
+        const garden_response = await axios.get(Constants.NGROK_URL + 'gardens', {
             headers: {
                 Authorization: `${auth.token}`,
             },
         });
 
-        const pod_response = await axios.get(`http://localhost:3001/pod/${garden_response.data[0].id}`, {
+        const pod_response = await axios.get(Constants.NGROK_URL + `/pod/${garden_response.data[0].id}`, {
             headers: {
                 Authorization: `${auth.token}`,
             },
         });
 
-        const measurement_response = await axios.get(`http://localhost:3001/measurement/latest/${pod_response.data[0].id}`, {
+        const measurement_response = await axios.get(Constants.NGROK_URL + `/measurement/latest/${pod_response.data[0].id}`, {
             headers: {
                 Authorization: `${auth.token}`,
             },
@@ -83,7 +84,7 @@ export const getPodGardens = (pod_id) => async (dispatch, getState) => {
     try {
         console.log(getState())
         const { auth } = getState();
-        const response = await axios.get(`http://localhost:3001/gardens/${pod_id}`, {
+        const response = await axios.get(Constants.NGROK_URL + `/gardens/${pod_id}`, {
             headers: {
                 Authorization: `${auth.token}`,
             },

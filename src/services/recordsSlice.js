@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import Constants from '../constants'
 
 export const recordsSlice = createSlice({
   name: 'records',
@@ -28,7 +29,7 @@ export const getRecords = () => async (dispatch, getState) => {
   try {
     console.log(getState())
     const { auth } = getState();
-    const response = await axios.get('http://localhost:3001/records/1', {
+    const response = await axios.get(Constants.NGROK_URL + '/records/1', {
       headers: {
         Authorization: `${auth.token}`,
       },
@@ -43,7 +44,7 @@ export const getPodRecords = (pod_id) => async (dispatch, getState) => {
   try {
     console.log(getState())
     const { auth } = getState();
-    const response = await axios.get(`http://localhost:3001/records/${pod_id}`, {
+    const response = await axios.get(Constants.NGROK_URL + `/records/${pod_id}`, {
       headers: {
         Authorization: `${auth.token}`,
       },
@@ -58,7 +59,7 @@ export const createRecord = (record, pod_id) => async (dispatch, getState) => {
   try {
     const { auth } = getState();
     const { pods } = getState();
-    const response = await axios.post(`http://localhost:3001/records/${pods.activePodId}`, { record }, {
+    const response = await axios.post(Constants.NGROK_URL + `/records/${pods.activePodId}`, { record }, {
       headers: {
         Authorization: `${auth.token}`,
       },
