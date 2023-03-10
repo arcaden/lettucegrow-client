@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import Constants from '../constants'
 
 export const measurementsSlice = createSlice({
   name: 'measurements',
@@ -17,7 +18,7 @@ export const getMeasurements = () => async (dispatch, getState) => {
     console.log(getState())
     const { auth } = getState();
     const { pods } = getState();
-    const response = await axios.get(`http://localhost:3001/measurements/${pods.activePodId}`, {
+    const response = await axios.get(Constants.NGROK_URL + `/measurements/${pods.activePodId}`, {
       headers: {
         Authorization: `${auth.token}`,
       },
@@ -33,7 +34,7 @@ export const getLatestMeasurements = (pod_id) => async (dispatch, getState) => {
     console.log(getState())
     const { auth } = getState();
     const { pods } = getState();
-    const response = await axios.get(`http://localhost:3001/measurements/latest/${pods.activePodId}`, {
+    const response = await axios.get(Constants.NGROK_URL + `/measurements/latest/${pods.activePodId}`, {
       headers: {
         Authorization: `${auth.token}`,
       },

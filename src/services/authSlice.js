@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import Constants from '../constants'
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -34,7 +35,7 @@ export const login = credentials => async dispatch => {
     }
   }
   try {
-    const response = await axios.post('http://localhost:3001/users/sign_in', body)
+    const response = await axios.post(Constants.NGROK_URL + '/users/sign_in', body)
     const token = response.headers.authorization
     if (token) {
       localStorage.setItem('token', token)
