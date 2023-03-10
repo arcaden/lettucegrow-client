@@ -12,7 +12,6 @@ const PodContainer = () => {
   const measurements = useSelector((state => state.measurements))
 
   useEffect(() => {
-    console.log("Test")
     dispatch(loadInitalState());
   }, [dispatch]);
 

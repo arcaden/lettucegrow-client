@@ -16,8 +16,10 @@ function App() {
       <AppProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/login" element={<LoginForm/>} />
-            <Route path="/" element={<PodContainer />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route exact path='/' element={<ProtectedRoute />}>
+              <Route exact path='/' element={<PodContainer />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </AppProvider>

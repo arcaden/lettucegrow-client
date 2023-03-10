@@ -1,18 +1,10 @@
-import React, {useEffect} from 'react'
-import {useSelector} from "react-redux"
-import {useNavigate, useLocation} from "react-router-dom"
 
-const ProtectedRoute = ({children}) => {
-    const navigate = useNavigate();
-    useEffect(() => {  
-        console.log("Test")      
-        if (localStorage.getItem("token")) {
-          navigate("/login");
-        }
-      });
-    
- return children
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 
-};
+const ProtectedRoute = () => {
+    const auth = (localStorage.getItem("token"))
+    return auth ? <Outlet /> : <Navigate to="/login" />;
+}
 
 export default ProtectedRoute;
