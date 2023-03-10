@@ -4,7 +4,7 @@ import axios from 'axios'
 export const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    token: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3NzQ4MjhhNy1hOTc1LTQ4MzYtYjFmNS1hYjIyN2ExZTU4M2UiLCJzY3AiOiJ1c2VyIiwiYXVkIjpudWxsLCJpYXQiOjE2NzgwNjA1NjUsImV4cCI6MTY3ODA2NDE2NSwianRpIjoiYzRlZWFiMDMtODNkZC00MTJkLWIxN2QtNzEwYzkwODIyYWM3In0.NnxcSFtNOPf9qs3c06zAEDb1Kz6ZXT1bmaPIcA86e54",
+    token: localStorage.getItem("token"),
     loading: false,
     error: null
   },
@@ -36,6 +36,9 @@ export const login = credentials => async dispatch => {
   try {
     const response = await axios.post('http://localhost:3001/users/sign_in', body)
     const token = response.headers.authorization
+    if (token) {
+      localStorage.setItem('token', token)
+    }
     dispatch(loginSuccess(token))
   } catch (error) {
     dispatch(loginFailure(error.message))

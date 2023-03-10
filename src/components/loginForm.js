@@ -1,16 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { login } from '../services/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate();
 
   const handleSubmit = event => {
     event.preventDefault()
     dispatch(login({ username, password }))
   }
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    }
+  });
 
   return (
     <form onSubmit={handleSubmit}>
