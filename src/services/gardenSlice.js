@@ -54,7 +54,7 @@ export const loadInitalState = () => async (dispatch, getState) => {
     try {
         const { auth } = getState();
 
-        const garden_response = await axios.get(Constants.NGROK_URL + 'gardens', {
+        const garden_response = await axios.get(Constants.NGROK_URL + '/gardens', {
             headers: {
                 Authorization: `${auth.token}`,
             },

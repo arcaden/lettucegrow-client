@@ -80,10 +80,10 @@ export const createPod = (body) => async (dispatch, getState) => {
   }
 };
 
-export const updatePodById = (id, name) => async (dispatch, getState) => {
+export const updatePodById = (id, body) => async (dispatch, getState) => {
   try {
     const { auth } = getState();
-    const response = await axios.put(`/api/pods/${id}`, { name }, {
+    const response = await axios.put(`/api/pods/${id}`, { body }, {
       headers: {
         Authorization: `${auth.token}`,
       },
