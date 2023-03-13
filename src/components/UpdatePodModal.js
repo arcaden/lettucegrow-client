@@ -156,7 +156,7 @@ function UpdatePodModal({ pod }) {
             <TextField
               value={formData.min_ph}
               onChange={handleMinPHChange}
-              label="Max pH"
+              label="Min pH"
               type="text"
             />
 

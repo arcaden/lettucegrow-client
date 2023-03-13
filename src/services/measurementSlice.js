@@ -34,7 +34,7 @@ export const getLatestMeasurements = (pod_id) => async (dispatch, getState) => {
     console.log(getState())
     const { auth } = getState();
     const { pods } = getState();
-    const response = await axios.get(Constants.NGROK_URL + `/measurements/latest/${pods.activePodId}`, {
+    const response = await axios.get(Constants.NGROK_URL + `/measurement/latest/${pods.activePodId}`, {
       headers: {
         Authorization: `${auth.token}`,
       },
