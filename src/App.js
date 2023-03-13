@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PodContainer from './containers/podContainer';
 import RecordTableContainer from './components/recordTableContainer';
 import ProtectedRoute from './utils/ProtectedRoute';
+import Dashboard from './components/dashboard'
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Routes>
             <Route path="/login" element={<LoginForm />} />
             <Route exact path='/' element={<ProtectedRoute />}>
-              <Route exact path='/' element={<PodContainer />} />
+              <Route exact path='/' element={<Dashboard />} />
             </Route>
           </Routes>
         </BrowserRouter>
