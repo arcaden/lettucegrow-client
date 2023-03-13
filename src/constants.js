@@ -1,4 +1,4 @@
 const Constants = {
-    NGROK_URL: "https://59fa-72-142-18-42.ngrok.io",
+    NGROK_URL: "https://rails-mry7.onrender.com",
   }
 export default Constants

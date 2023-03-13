@@ -9,6 +9,7 @@ import {
 } from '@shopify/polaris';
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
+import CreateRecordForm from './createRecordForm';
 
 export default function RecordTableContainer() {
   const navigate = useNavigate();
@@ -300,6 +301,9 @@ export default function RecordTableContainer() {
             value={sortValue}
             onChange={handleSortChange}
           />
+        </div>
+        <div style={{ paddingLeft: '0.25rem' }}>
+          <CreateRecordForm></CreateRecordForm>
         </div>
       </div>
       <IndexTable
