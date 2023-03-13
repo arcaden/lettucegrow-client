@@ -15,8 +15,6 @@ function UpdatePodModal({ pod }) {
       max_ec: pod.max_ec,
       min_ph: pod.min_ph,
       max_ph: pod.max_ph,
-      min_temp: pod.min_temp,
-      max_temp: pod.max_temp,
     }
   } else {
     intitalState = {
@@ -28,9 +26,6 @@ function UpdatePodModal({ pod }) {
       max_ec: "",
       min_ph: "",
       max_ph: "",
-      min_temp: "",
-      max_temp: "",
-
     }
   }
 
@@ -75,7 +70,7 @@ function UpdatePodModal({ pod }) {
     if (event >= formData.min_ec) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        min_ec: event,
+        max_ec: event,
       }));
     }
   };
@@ -111,13 +106,49 @@ function UpdatePodModal({ pod }) {
 
   const handleChange = useCallback(() => setActive(!active), [active]);
 
+  function populateForm() {
+    intitalState = {}
+    if (pod) {
+      intitalState = {
+        id: pod.id,
+        label: pod.label,
+        plant_name: pod.plant_name,
+        instructions: pod.instructions,
+        min_ec: pod.min_ec,
+        max_ec: pod.max_ec,
+        min_ph: pod.min_ph,
+        max_ph: pod.max_ph,
+      }
+    } else {
+      intitalState = {
+        id: "",
+        label: "",
+        plant_name: "",
+        instructions: "",
+        min_ec: "",
+        max_ec: "",
+        min_ph: "",
+        max_ph: "",
+      }
+    }
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      ...intitalState
+    }))
+  }
+
+  function toggleEditPod() {
+    handleChange();
+    populateForm();
+  }
+
   function handleSubmit() {
     dispatch(updatePodById(pod.id, formData));
     handleChange()
   }
 
 
-  const activator = <Button onClick={handleChange}>Edit Pod</Button>;
+  const activator = <Button onClick={toggleEditPod}>Edit Pod</Button>;
 
   return (
     <Modal
@@ -169,25 +200,13 @@ function UpdatePodModal({ pod }) {
             <TextField
               value={formData.min_ec}
               onChange={handleMinECChange}
-              label="pH Up"
+              label="Min PPM"
               type="text"
             />
             <TextField
               value={formData.max_ec}
               onChange={handleMaxECChange}
-              label="pH down"
-              type="text"
-            />
-            <TextField
-              value={formData.min_temp}
-              onChange={handleMinTempChange}
-              label="start PPM"
-              type="text"
-            />
-            <TextField
-              value={formData.max_temp}
-              onChange={handleMaxTempChange}
-              label="end PPM"
+              label="Max PPM"
               type="text"
             />
             <TextField
