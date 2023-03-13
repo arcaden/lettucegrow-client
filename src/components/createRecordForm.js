@@ -178,9 +178,9 @@ const CreateRecordForm = () => {
         return measurement.measurement_type === "ph";
     });
 
-    const [active, setActive] = useState(true);
+    const [active, setActive] = useState(false);
     const handleChange = useCallback(() => setActive(!active), [active]);
-    const activator = <Button onClick={handleChange}>Open</Button>;
+    const activator = <Button primary onClick={handleChange}>Add Adjustment</Button>;
 
     function handleGetStartValues(){
         dispatch(getLatestMeasurements())

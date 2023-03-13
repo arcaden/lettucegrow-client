@@ -100,6 +100,7 @@ const PodContainer = () => {
 
   return (
     <React.Fragment>
+      <UpdatePodModal pod = {active_pod[0]}/>
       <LegacyStack>
         <LegacyCard title="Garden pH" sectioned>
           <Columns gap="4" columns={2}>
@@ -112,6 +113,7 @@ const PodContainer = () => {
               {phRangeDisplayValue()}
             </div>
           </Columns>
+          <Button plain onClick={handleGetGardens}> Refreash </Button>
         </LegacyCard>
 
         <LegacyCard title="Garden PPM" sectioned>
@@ -125,9 +127,8 @@ const PodContainer = () => {
               {ecRangeDisplayValue()}
             </div>
           </Columns>
+          <Button plain onClick={handleGetGardens}> Refreash </Button>
         </LegacyCard>
-        <Button onClick={handleGetGardens}> Pull measurements </Button>
-        <UpdatePodModal pod = {active_pod[0]}/>
       </LegacyStack>
 
     </React.Fragment>
