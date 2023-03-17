@@ -6,22 +6,25 @@ import {
   Select,
   useIndexResourceState,
   Text,
+  Icon,
+  Button
 } from '@shopify/polaris';
+import {
+  ImagesMajor
+} from '@shopify/polaris-icons';
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import CreateRecordForm from './createRecordForm';
+import UpdateRecordModal from './UpdateRecordModal';
 
 export default function RecordTableContainer() {
   const navigate = useNavigate();
 
-  useEffect(() => {  
-    console.log(localStorage.getItem("token"))      
+  useEffect(() => {
     if (localStorage.getItem("token") == null) {
       navigate("/login");
     }
   });
-
-
 
   const customers = [
     {
@@ -180,23 +183,6 @@ export default function RecordTableContainer() {
     },
   ];
 
-  const filters = [
-    {
-      key: 'taggedWith',
-      label: 'Tagged with',
-      filter: (
-        <TextField
-          label="Tagged with"
-          value={taggedWith}
-          onChange={handleTaggedWithChange}
-          autoComplete="off"
-          labelHidden
-        />
-      ),
-      shortcut: true,
-    },
-  ];
-
   const appliedFilters = !isEmpty(taggedWith)
     ? [
       {
@@ -213,68 +199,77 @@ export default function RecordTableContainer() {
     { label: 'Last 7 days', value: 'lastWeek' },
   ];
 
+  function openDetails() {
+    console.log("Clicked")
+  }
+
   const rowMarkup = records.map(
-    ({id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water }, index) => (
+    ({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water }, index) => (
       <IndexTable.Row
         id={id}
         key={id}
-        selected={selectedResources.includes(id)}
         position={index}
       >
+        <IndexTable.Cell onClick={() => console.log("clicked row with id: " + id)}>
+          <Text fontWeight="bold" as="span">
+            <Icon
+              source={ImagesMajor}
+              color="base"
+            />
+          </Text>
+        </IndexTable.Cell>
         <IndexTable.Cell>
           <Text fontWeight="bold" as="span">
             {user.name}
           </Text>
         </IndexTable.Cell>
         <IndexTable.Cell>
-          <Text as="span"  numeric>
+          <Text as="span" numeric>
             {created_at}
           </Text>
         </IndexTable.Cell>
         <IndexTable.Cell>
-          <Text as="span"  numeric>
+          <Text as="span" numeric>
             {start_ph}
           </Text>
         </IndexTable.Cell>
         <IndexTable.Cell>
-          <Text as="span"  numeric>
+          <Text as="span" numeric>
             {end_ph}
           </Text>
         </IndexTable.Cell>
         <IndexTable.Cell>
-          <Text as="span"  numeric>
+          <Text as="span" numeric>
             {ph_up}
           </Text>
         </IndexTable.Cell>
         <IndexTable.Cell>
-          <Text as="span"  numeric>
+          <Text as="span" numeric>
             {ph_down}
           </Text>
         </IndexTable.Cell>
         <IndexTable.Cell>
-          <Text as="span"  numeric>
+          <Text as="span" numeric>
             {start_ec}
           </Text>
         </IndexTable.Cell>
         <IndexTable.Cell>
-          <Text as="span"  numeric>
+          <Text as="span" numeric>
             {end_ec}
           </Text>
         </IndexTable.Cell>
         <IndexTable.Cell>
-          <Text as="span"  numeric>
+          <Text as="span" numeric>
             {water}
           </Text>
         </IndexTable.Cell>
         <IndexTable.Cell>
-          <Text as="span"  numeric>
+          <Text as="span" numeric>
             {temperature}
           </Text>
         </IndexTable.Cell>
         <IndexTable.Cell>
-          <Text as="span"  numeric>
-            Buttons
-          </Text>
+          <UpdateRecordModal />
         </IndexTable.Cell>
       </IndexTable.Row>
     ),
@@ -283,16 +278,6 @@ export default function RecordTableContainer() {
   return (
     <LegacyCard>
       <div style={{ padding: '16px', display: 'flex' }}>
-        <div style={{ flex: 1 }}>
-          <Filters
-            queryValue={queryValue}
-            filters={filters}
-            appliedFilters={appliedFilters}
-            onQueryChange={setQueryValue}
-            onQueryClear={handleQueryValueRemove}
-            onClearAll={handleClearAll}
-          />
-        </div>
         <div style={{ paddingLeft: '0.25rem' }}>
           <Select
             labelInline
@@ -309,15 +294,11 @@ export default function RecordTableContainer() {
       <IndexTable
         resourceName={resourceName}
         itemCount={customers.length}
-        selectedItemsCount={
-          allResourcesSelected ? 'All' : selectedResources.length
-        }
-        onSelectionChange={handleSelectionChange}
         hasMoreItems
-        bulkActions={bulkActions}
-        promotedBulkActions={promotedBulkActions}
+        selectable={false}
         lastColumnSticky
         headings={[
+          { title: '' },
           { title: 'Name' },
           { title: 'Date' },
           { title: 'Start pH' },
@@ -328,6 +309,7 @@ export default function RecordTableContainer() {
           { title: 'End PPM' },
           { title: 'H2O' },
           { title: 'Temperature' },
+          { title: ' ' },
         ]}
       >
         {rowMarkup}
