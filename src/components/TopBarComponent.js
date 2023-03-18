@@ -5,13 +5,7 @@ import { useSelector } from 'react-redux';
 import UpdatePodModal from './UpdatePodModal';
 
 export default function TopBarComponent() {
-    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const auth = useSelector((state) => state.auth);
-
-    const toggleIsUserMenuOpen = useCallback(
-        () => setIsUserMenuOpen((isUserMenuOpen) => !isUserMenuOpen),
-        [],
-    );
 
     const logo = {
         width: 124,
@@ -30,16 +24,9 @@ export default function TopBarComponent() {
 
     const userMenuMarkup = (
         <TopBar.UserMenu
-            actions={[
-                {
-                    items: [{ content: 'Edit Pod', icon: ToolsMajor }],
-                }
-            ]}
             name="Demo"
             detail="Demo Pod"
             initials="D"
-            open={isUserMenuOpen}
-            onToggle={toggleIsUserMenuOpen}
         />
     );
 
