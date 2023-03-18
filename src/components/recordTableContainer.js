@@ -65,7 +65,7 @@ const navigate = useNavigate();
 		"temperature": "26.0",
 		"ph_up": "100.0",
 		"ph_down": "0.0",
-		"photos": [],
+		"photos": ["https://fydp2.s3.amazonaws.com/test/testPlantImage.jpg"],
 		"created_at": "2023-03-05T23:47:07.934Z"
 	},
 	{
@@ -83,7 +83,7 @@ const navigate = useNavigate();
 		"temperature": "26.0",
 		"ph_up": "200.0",
 		"ph_down": "0.0",
-		"photos": [],
+		"photos": ["https://fydp2.s3.amazonaws.com/test/glen.jpeg"],
 		"created_at": "2023-03-05T23:47:07.942Z"
 	},
 	{
@@ -101,7 +101,7 @@ const navigate = useNavigate();
 		"temperature": "25.0",
 		"ph_up": "100.0",
 		"ph_down": "0.0",
-		"photos": [],
+		"photos": ["https://fydp2.s3.amazonaws.com/test/testPlantImage.jpg"],
 		"created_at": "2023-03-07T22:20:39.678Z"
 	},
 	{
@@ -119,7 +119,7 @@ const navigate = useNavigate();
 		"temperature": "25.0",
 		"ph_up": "100.0",
 		"ph_down": "0.0",
-		"photos": [],
+		"photos": ["https://fydp2.s3.amazonaws.com/test/testPlantImage.jpg"],
 		"created_at": "2023-03-07T22:21:30.421Z"
 	},
 	{
@@ -137,7 +137,7 @@ const navigate = useNavigate();
 		"temperature": "25.0",
 		"ph_up": "100.0",
 		"ph_down": "0.0",
-		"photos": [],
+		"photos": ["https://fydp2.s3.amazonaws.com/test/testPlantImage.jpg"],
 		"created_at": "2023-03-07T22:21:40.967Z"
 	}
 	]
@@ -204,7 +204,7 @@ const navigate = useNavigate();
 	}
 
 	const rowMarkup = records.map(
-	({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water }, index) => (
+	({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water, photos }, index) => (
 		<IndexTable.Row
 		id={id}
 		key={id}
@@ -281,6 +281,7 @@ const navigate = useNavigate();
 			ph_up={ph_up}
 			ph_down={ph_down}
 			water={water}
+			photos={photos}
 			/>
 		</IndexTable.Cell>
 		</IndexTable.Row>

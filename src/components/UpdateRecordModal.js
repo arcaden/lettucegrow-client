@@ -1,9 +1,10 @@
-import { Select, Button, Modal, Form, FormLayout, TextField, Columns } from '@shopify/polaris';
+import { Select, Button, Modal, Form, FormLayout, TextField, Columns, LegacyStack, LegacyCard } from '@shopify/polaris';
 import { useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateRecordById } from '../services/recordsSlice';
+import { deleteRecordById } from '../services/recordsSlice';
 
-function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water }) {
+function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water, photos }) {
 
 	let intitalState = {
 		name: user.name,
@@ -18,7 +19,7 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 		water: water,
 		temperature: temperature,
 		note: '',
-		image: null,
+		image: photos[0],
 	}
 	const dispatch = useDispatch();
 	const [active, setActive] = useState(false);
@@ -101,6 +102,10 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 		handleChange()
 	}
 
+	function handleDelete(){
+		dispatch(deleteRecordById(id));
+		handleChange()
+	}
 
 
 	const activator = <Button onClick={toggleEditPod}>View More</Button>;
@@ -112,7 +117,7 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 			onClose={handleChange}
 			title={readableDate(created_at)}
 			primaryAction={{
-				content: 'Update',
+					content: 'Update',
 					onAction: handleSubmit,
 				}}
 			secondaryActions={[
@@ -122,12 +127,22 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 			},
 			{
 				content: 'Delete',
-				onAction: handleChange,
+				onAction: handleDelete,
 			},
 			]}
 		>
 			<Columns columns={2}>
-				<img></img>
+				<img
+					alt=""
+					width="100%"
+					height="100%"
+					style={{
+						objectFit: 'cover',
+						objectPosition: 'center',
+					}}
+					src={formData.image}
+				/>
+				
 				<Modal.Section>
 					<Form onSubmit={() => handleSubmit} implicitSubmit={false}>
 						<FormLayout>

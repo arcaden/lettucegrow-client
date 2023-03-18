@@ -8,9 +8,9 @@ export default function TopBarComponent() {
     const auth = useSelector((state) => state.auth);
 
     const logo = {
-        width: 124,
+        width: 164,
         topBarSource:
-            '../../publick/logo.svg',
+            'https://fydp2.s3.amazonaws.com/test/Logo.svg',
         url: '/',
         accessibilityLabel: 'LettuceGrow',
     };
