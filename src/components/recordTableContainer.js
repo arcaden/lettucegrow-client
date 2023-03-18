@@ -276,9 +276,9 @@ export default function RecordTableContainer() {
   );
 
   return (
-    <LegacyCard>
+    <LegacyCard title="Adjustment Log">
       <div style={{ padding: '16px', display: 'flex' }}>
-        <div style={{ paddingLeft: '0.25rem' }}>
+        <div style={{ paddingLeft: '0.25rem', paddingRight: '0.8rem' }}>
           <Select
             labelInline
             label="Sort by"

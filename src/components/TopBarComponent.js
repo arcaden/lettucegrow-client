@@ -2,6 +2,7 @@ import { TopBar, ActionList, Icon, Frame, Text } from '@shopify/polaris';
 import { ToolsMajor, QuestionMarkMajor } from '@shopify/polaris-icons';
 import { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import UpdatePodModal from './UpdatePodModal';
 
 export default function TopBarComponent() {
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -15,9 +16,9 @@ export default function TopBarComponent() {
     const logo = {
         width: 124,
         topBarSource:
-            'https://cdn.shopify.com/s/files/1/0446/6937/files/jaded-pixel-logo-color.svg?6215648040070010999',
+            '../../publick/logo.svg',
         url: '/',
-        accessibilityLabel: 'Jaded Pixel',
+        accessibilityLabel: 'LettuceGrow',
     };
 
     function decodeToken(token) {
@@ -31,11 +32,11 @@ export default function TopBarComponent() {
         <TopBar.UserMenu
             actions={[
                 {
-                    items: [{ content: 'Configure Settings', icon: ToolsMajor }],
+                    items: [{ content: 'Edit Pod', icon: ToolsMajor }],
                 }
             ]}
             name="Demo"
-            detail="Demo User"
+            detail="Demo Pod"
             initials="D"
             open={isUserMenuOpen}
             onToggle={toggleIsUserMenuOpen}
@@ -49,7 +50,7 @@ export default function TopBarComponent() {
     );
 
     return (
-        <div style={{ height: '250px' }}>
+        <div style={{ height: '50px' }}>
             <Frame topBar={topBarMarkup} logo={logo} />
         </div>
     );

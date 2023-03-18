@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getGardenPods, createPod, updatePod } from '../services/podSlice';
 import { getLatestMeasurements } from '../services/measurementSlice';
-import { LegacyStack, LegacyCard, Button, Columns, Modal, TextContainer } from '@shopify/polaris';
+import { LegacyStack, LegacyCard, Button, Columns, Modal, Text, Frame } from '@shopify/polaris';
 import { getGardens, loadInitalState } from '../services/gardenSlice';
 import ModalExample from '../components/UpdatePodModal';
 import UpdatePodModal from '../components/UpdatePodModal';
@@ -43,6 +43,8 @@ const PodContainer = () => {
   });
 
   const active_pod = pods.length > 0 ? [pods[0]] : []
+  let title = pods.length > 0 ? active_pod[0].label : "Please Refresh"
+  let last_refresh_time = phMeasurements.length === 0 ? "Please Refresh Value" : phMeasurements[0].created_at
 
   const handleGetGardens = () => {
     dispatch(loadInitalState());
@@ -50,13 +52,21 @@ const PodContainer = () => {
 
   function phDisplayValue() {
     if (phMeasurements.length === 0) {
-      return <p> Please Refresh Value </p>
+    	return <p> Please Refresh Value </p>
     } else {
-      return (
-        <div>
-          <p> {phMeasurements[0].value} </p>
-          <p> Measured at {phMeasurements[0].created_at} </p>
-        </div>)
+		let measurementColor = ""
+		if (Number(phMeasurements[0].value < active_pod[0].min_ph) || Number(phMeasurements[0].value > active_pod[0].max_ph)){
+			measurementColor = "critical"
+		}
+		return (
+		<LegacyStack vertical>
+			<Text variant="headingSm" as="h1">
+				Current pH
+			</Text>
+			<Text variant="heading4xl" color={measurementColor}>
+				{phMeasurements[0].value}
+			</Text>
+		</LegacyStack>)
     }
   }
 
@@ -64,11 +74,19 @@ const PodContainer = () => {
     if (ecMeasurements.length === 0) {
       return <p> Please Refresh Value </p>
     } else {
-      return (
-        <div>
-          <p> {ecMeasurements[0].value} </p>
-          <p> Measured at {ecMeasurements[0].created_at} </p>
-        </div>)
+		let measurementColor = ""
+		if (Number(ecMeasurements[0].value) < Number(active_pod[0].min_ec) || Number(ecMeasurements[0].value) > Number(active_pod[0].max_ec)){
+			measurementColor = "critical"
+		}
+		return (
+			<LegacyStack vertical>
+				<Text variant="headingSm">
+				Current PPM
+				</Text>
+				<Text variant="heading4xl" as="h1" color={measurementColor}>
+				{ecMeasurements[0].value}
+				</Text>
+			</LegacyStack>)
     }
   }
 
@@ -78,9 +96,14 @@ const PodContainer = () => {
       return <p> Please Refresh Value </p>
     } else {
       return (
-        <div>
-          <p> {active_pod[0].min_ec} -  {active_pod[0].max_ec}</p>
-        </div>)
+        <LegacyStack vertical>
+			<Text variant="headingSm">
+				Ideal PPM Range
+			</Text>
+		 	<Text variant="heading4xl" as="h1">
+				{active_pod[0].min_ec} -  {active_pod[0].max_ec}
+			</Text>
+        </LegacyStack>)
     }
   }
 
@@ -90,9 +113,14 @@ const PodContainer = () => {
       return <p> Please Refresh Value </p>
     } else {
       return (
-        <div>
-          <p> {active_pod[0].min_ph} -  {active_pod[0].max_ph}</p>
-        </div>)
+        <LegacyStack vertical>
+			<Text variant="headingSm">
+				Ideal pH Range
+			</Text>
+			<Text variant="heading4xl" as="h1">
+				{active_pod[0].min_ph} -  {active_pod[0].max_ph}
+			</Text>
+        </LegacyStack>)
     }
   }
 
@@ -100,37 +128,40 @@ const PodContainer = () => {
 
   return (
     <React.Fragment>
-      <UpdatePodModal pod = {active_pod[0]}/>
-      <LegacyStack>
-        <LegacyCard title="Garden pH" sectioned>
-          <Columns gap="4" columns={2}>
-            <div>
-              <p> Current pH </p>
-              {phDisplayValue()}
-            </div>
-            <div>
-              <p> Ideal pH Range </p>
-              {phRangeDisplayValue()}
-            </div>
-          </Columns>
-          <Button plain onClick={handleGetGardens}> Refreash </Button>
-        </LegacyCard>
+		<LegacyCard title={title}>
+			<LegacyCard.Section>
+				<LegacyStack vertical>
+					<LegacyStack spacing='loose' distribution="fill">
+						<LegacyCard sectioned>
+							<LegacyStack vertical>
+								<Columns columns={2}>
+									{phDisplayValue()}
+									{phRangeDisplayValue()}
+								</Columns>
+								<Text> Last Updated {last_refresh_time} </Text>
+							</LegacyStack>
+						</LegacyCard>
 
-        <LegacyCard title="Garden PPM" sectioned>
-          <Columns gap="4" columns={2}>
-            <div>
-              <p> Current PPM </p>
-              {ecDisplayValue()}
-            </div>
-            <div>
-              <p> Ideal PPM Range </p>
-              {ecRangeDisplayValue()}
-            </div>
-          </Columns>
-          <Button plain onClick={handleGetGardens}> Refreash </Button>
-        </LegacyCard>
-      </LegacyStack>
+						<LegacyCard sectioned> 
+							<LegacyStack vertical>
+								<Columns columns={2}>
+									{ecDisplayValue()}
+									{ecRangeDisplayValue()}
+								</Columns>
+								<Text> Last Updated {last_refresh_time} </Text>
+							</LegacyStack>
+						</LegacyCard>
 
+					</LegacyStack>
+
+					<LegacyStack distribution="trailing">
+						<Button primary onClick={handleGetGardens}> Refresh </Button>
+						<UpdatePodModal pod = {active_pod[0]}/>
+					</LegacyStack>
+				</LegacyStack>
+			</LegacyCard.Section>
+
+		</LegacyCard>
     </React.Fragment>
   );
 };
