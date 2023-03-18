@@ -77,9 +77,13 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 	};
 
 	const handleWaterChange = (event) => {
+		let water = false
+		if (event == "true"){
+			water = true
+		}
 		setFormData((prevFormData) => ({
 			...prevFormData,
-			water: event,
+			water: water,
 		}));
 	};
 
@@ -137,8 +141,9 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 					width="100%"
 					height="100%"
 					style={{
-						objectFit: 'cover',
+						objectFit: 'contain',
 						objectPosition: 'center',
+						paddingLeft: '20px',
 					}}
 					src={formData.image}
 				/>

@@ -83,7 +83,7 @@ const navigate = useNavigate();
 		"temperature": "26.0",
 		"ph_up": "200.0",
 		"ph_down": "0.0",
-		"photos": ["https://fydp2.s3.amazonaws.com/test/glen.jpeg"],
+		"photos": ["https://fydp2.s3.amazonaws.com/test/testPlantImage.jpg"],
 		"created_at": "2023-03-05T23:47:07.942Z"
 	},
 	{
