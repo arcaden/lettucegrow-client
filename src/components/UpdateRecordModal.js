@@ -1,6 +1,7 @@
-import { Select, Button, Modal, TextContainer, Form, FormLayout, TextField, Columns } from '@shopify/polaris';
+import { Select, Button, Modal, Form, FormLayout, TextField, Columns } from '@shopify/polaris';
 import { useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { updateRecordById } from '../services/recordsSlice';
 
 function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water }) {
 
@@ -96,7 +97,7 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 	}
 
 	function handleSubmit() {
-		// dispatch(updateRecordById(pod.id, recordData));
+		dispatch(updateRecordById(id, formData));
 		handleChange()
 	}
 
@@ -117,6 +118,10 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 			secondaryActions={[
 			{
 				content: 'Cancel',
+				onAction: handleChange,
+			},
+			{
+				content: 'Delete',
 				onAction: handleChange,
 			},
 			]}
