@@ -1,6 +1,6 @@
 {
   "name": "lettucegrow-client",
-  "homepage": "https://arcaden.github.io/lettucegrow",
+  "homepage": "https://arcaden.github.io/lettucegrow-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
