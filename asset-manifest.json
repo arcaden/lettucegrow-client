@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/lettucegrow/static/css/main.5c878c01.css",
+    "main.js": "/lettucegrow/static/js/main.70bcc69a.js",
+    "static/js/787.6567d5a6.chunk.js": "/lettucegrow/static/js/787.6567d5a6.chunk.js",
+    "static/media/logo.svg": "/lettucegrow/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/lettucegrow/index.html",
+    "main.5c878c01.css.map": "/lettucegrow/static/css/main.5c878c01.css.map",
+    "main.70bcc69a.js.map": "/lettucegrow/static/js/main.70bcc69a.js.map",
+    "787.6567d5a6.chunk.js.map": "/lettucegrow/static/js/787.6567d5a6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5c878c01.css",
+    "static/js/main.70bcc69a.js"
+  ]
+}
