@@ -225,7 +225,10 @@ const CreateRecordForm = () => {
         }
     }
 
-    const activator = <Button primary onClick={handleChange}>Add Adjustment</Button>;
+    const activator = 
+    <div style={{color: '#2C6ECB'}}>
+        <Button monochrome outline onClick={handleChange}>Add Adjustment</Button>
+    </div> 
 
     function handleGetStartValues() {
         dispatch(getLatestMeasurements())
