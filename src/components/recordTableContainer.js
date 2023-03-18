@@ -146,7 +146,6 @@ export default function RecordTableContainer() {
 	]
 
 
-
 	const { selectedResources, allResourcesSelected, handleSelectionChange } =
 		useIndexResourceState(customers);
 	const [taggedWith, setTaggedWith] = useState('VIP');
@@ -341,7 +340,7 @@ export default function RecordTableContainer() {
 		if (records.length != 0){
 			return records[0].pod_id
 		}
-		return "No Pods Present"
+		return "No Pod Available"
 	}
 
 	function disambiguateLabel(key, value) {
