@@ -19,7 +19,7 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 		water: water,
 		temperature: temperature,
 		note: '',
-		image: photos[0],
+		image: photos,
 	}
 	const dispatch = useDispatch();
 	const [active, setActive] = useState(false);
@@ -78,7 +78,7 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 
 	const handleWaterChange = (event) => {
 		let water = false
-		if (event == "true"){
+		if (event == "true") {
 			water = true
 		}
 		setFormData((prevFormData) => ({
@@ -89,7 +89,7 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 
 	const handleChange = useCallback(() => setActive(!active), [active]);
 
-	function populateForm(){
+	function populateForm() {
 		setFormData((prevFormData) => ({
 			...prevFormData,
 			...intitalState
@@ -106,11 +106,30 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 		handleChange()
 	}
 
-	function handleDelete(){
+	function handleDelete() {
 		dispatch(deleteRecordById(id));
 		handleChange()
 	}
 
+	function getFirstImage() {
+		if (formData.image.length == 0) {
+			return <p>No Image</p>
+		} else {
+			return (
+				<img
+					alt=""
+					width="100%"
+					height="100%"
+					style={{
+						objectFit: 'contain',
+						objectPosition: 'center',
+						paddingLeft: '20px',
+					}}
+					src={formData.image[0]}
+				/>
+			)
+		}
+	}
 
 	const activator = <Button onClick={toggleEditPod}>View More</Button>;
 
@@ -121,88 +140,77 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 			onClose={handleChange}
 			title={readableDate(created_at)}
 			primaryAction={{
-					content: 'Update',
-					onAction: handleSubmit,
-				}}
+				content: 'Update',
+				onAction: handleSubmit,
+			}}
 			secondaryActions={[
-			{
-				content: 'Cancel',
-				onAction: handleChange,
-			},
-			{
-				content: 'Delete',
-				onAction: handleDelete,
-			},
+				{
+					content: 'Cancel',
+					onAction: handleChange,
+				},
+				{
+					content: 'Delete',
+					onAction: handleDelete,
+				},
 			]}
 		>
 			<Columns columns={2}>
-				<img
-					alt=""
-					width="100%"
-					height="100%"
-					style={{
-						objectFit: 'contain',
-						objectPosition: 'center',
-						paddingLeft: '20px',
-					}}
-					src={formData.image}
-				/>
-				
+				{getFirstImage()}
 				<Modal.Section>
 					<Form onSubmit={() => handleSubmit} implicitSubmit={false}>
 						<FormLayout>
-						<TextField
-							value={formData.name}
-							onChange={handleNameChange}
-							label="Name"
-							type="label"
-						/>
+							<TextField
+								value={formData.name}
+								onChange={handleNameChange}
+								label="Name"
+								type="label"
+							/>
 
-						<TextField
-							value={formData.start_ph}
-							onChange={handleStartPhChange}
-							label="Start pH"
-							type="text"
-						/>
+							<TextField
+								value={formData.start_ph}
+								onChange={handleStartPhChange}
+								label="Start pH"
+								type="text"
+							/>
 
-						<TextField
-							value={formData.end_ph}
-							onChange={handleEndPhChange}
-							label="End pH"
-							type="text"
-						/>
+							<TextField
+								value={formData.end_ph}
+								onChange={handleEndPhChange}
+								label="End pH"
+								type="text"
+							/>
 
-						<TextField
-							value={formData.ph_up}
-							onChange={handlePhUpChange}
-							label="pH Up (mL)"
-							type="text"
-						/>
-						<TextField
-							value={formData.ph_down}
-							onChange={handlePhDownChange}
-							label="pH Down (mL)"
-							type="text"
-						/>
-						<TextField
-							value={formData.start_ec}
-							onChange={handleStartEcChange}
-							label="Start PPM"
-							type="text"
-						/>
-						<TextField
-							value={formData.end_ec}
-							onChange={handleEndEcChange}
-							label="End PPM"
-							type="text"
-						/>
-						<Select
-							label="H20"
-							options={[{ label: 'Yes', value: true },
-							{ label: 'No', value: false }]}
-							onChange={handleWaterChange}
-							value={formData.water}
-						/>
+							<TextField
+								value={formData.ph_up}
+								onChange={handlePhUpChange}
+								label="pH Up (mL)"
+								type="text"
+							/>
+							<TextField
+								value={formData.ph_down}
+								onChange={handlePhDownChange}
+								label="pH Down (mL)"
+								type="text"
+							/>
+							<TextField
+								value={formData.start_ec}
+								onChange={handleStartEcChange}
+								label="Start PPM"
+								type="text"
+							/>
+							<TextField
+								value={formData.end_ec}
+								onChange={handleEndEcChange}
+								label="End PPM"
+								type="text"
+							/>
+							<Select
+								label="H20"
+								options={[{ label: 'Yes', value: true },
+								{ label: 'No', value: false }]}
+								onChange={handleWaterChange}
+								value={formData.water}
+							/>
 
 						</FormLayout>
 					</Form>
@@ -213,15 +221,15 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 }
 
 
-function readableDate(dateString){
+function readableDate(dateString) {
 	const date = new Date(dateString);
-	const options = { 
-		year: 'numeric', 
-		month: 'long', 
-		day: '2-digit', 
-		hour: 'numeric', 
-		minute: 'numeric', 
-		hour12: true 
+	const options = {
+		year: 'numeric',
+		month: 'long',
+		day: '2-digit',
+		hour: 'numeric',
+		minute: 'numeric',
+		hour12: true
 	};
 	const readableDate = date.toLocaleString('en-US', options);
 

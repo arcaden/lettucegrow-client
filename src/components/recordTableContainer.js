@@ -7,7 +7,8 @@ Select,
 useIndexResourceState,
 Text,
 Icon,
-Button
+Button,
+Thumbnail
 } from '@shopify/polaris';
 import {
 ImagesMajor
@@ -212,10 +213,7 @@ const navigate = useNavigate();
 		>
 		<IndexTable.Cell onClick={() => console.log("clicked row with id: " + id)}>
 			<Text fontWeight="bold" as="span">
-			<Icon
-				source={ImagesMajor}
-				color="base"
-			/>
+			<Thumbnail source={photos[0]} />
 			</Text>
 		</IndexTable.Cell>
 		<IndexTable.Cell>
