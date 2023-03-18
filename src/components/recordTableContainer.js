@@ -8,7 +8,8 @@ import {
 	Text,
 	Icon,
 	Button,
-	Thumbnail
+	Thumbnail,
+	FooterHelp
 } from '@shopify/polaris';
 import {
 	ImagesMajor
@@ -288,46 +289,60 @@ export default function RecordTableContainer() {
 	);
 
 	return (
-		<LegacyCard title="Adjustment Log">
-			<div style={{ padding: '16px', display: 'flex' }}>
-				<div style={{ paddingLeft: '0.25rem', paddingRight: '0.8rem' }}>
-					<Select
-						labelInline
-						label="Sort by"
-						options={sortOptions}
-						value={sortValue}
-						onChange={handleSortChange}
-					/>
+		<div>
+			<LegacyCard title="Adjustment Log">
+				<div style={{ padding: '16px', display: 'flex' }}>
+					<div style={{ paddingLeft: '0.25rem', paddingRight: '0.8rem' }}>
+						<Select
+							labelInline
+							label="Sort by"
+							options={sortOptions}
+							value={sortValue}
+							onChange={handleSortChange}
+						/>
+					</div>
+					<div style={{ paddingLeft: '0.25rem' }}>
+						<CreateRecordForm></CreateRecordForm>
+					</div>
 				</div>
-				<div style={{ paddingLeft: '0.25rem' }}>
-					<CreateRecordForm></CreateRecordForm>
-				</div>
-			</div>
-			<IndexTable
-				resourceName={resourceName}
-				itemCount={customers.length}
-				hasMoreItems
-				selectable={false}
-				lastColumnSticky
-				headings={[
-					{ title: '' },
-					{ title: 'Name' },
-					{ title: 'Date' },
-					{ title: 'Start pH' },
-					{ title: 'End pH' },
-					{ title: 'pH Up (mL)' },
-					{ title: 'pH Down (mL)' },
-					{ title: 'Start PPM' },
-					{ title: 'End PPM' },
-					{ title: 'H2O' },
-					{ title: 'Temperature' },
-					{ title: ' ' },
-				]}
-			>
-				{rowMarkup}
-			</IndexTable>
-		</LegacyCard>
+				<IndexTable
+					resourceName={resourceName}
+					itemCount={customers.length}
+					hasMoreItems
+					selectable={false}
+					lastColumnSticky
+					headings={[
+						{ title: '' },
+						{ title: 'Name' },
+						{ title: 'Date' },
+						{ title: 'Start pH' },
+						{ title: 'End pH' },
+						{ title: 'pH Up (mL)' },
+						{ title: 'pH Down (mL)' },
+						{ title: 'Start PPM' },
+						{ title: 'End PPM' },
+						{ title: 'H2O' },
+						{ title: 'Temperature' },
+						{ title: ' ' },
+					]}
+				>
+					{rowMarkup}
+				</IndexTable>
+
+			</LegacyCard>
+			<FooterHelp>
+				Pod ID: {getFirstPodId()}
+			</FooterHelp>
+		</div>
+
 	);
+
+	function getFirstPodId(){
+		if (records.length != 0){
+			return records[0].pod_id
+		}
+		return "No Pods Present"
+	}
 
 	function disambiguateLabel(key, value) {
 		switch (key) {

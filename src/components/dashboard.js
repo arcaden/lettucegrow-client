@@ -1,4 +1,4 @@
-import {Page, Badge, LegacyCard, Layout} from '@shopify/polaris';
+import { Page, FooterHelp, Layout } from '@shopify/polaris';
 import PodContainer from '../containers/podContainer';
 import RecordTableContainer from './recordTableContainer';
 import TopBarComponent from './TopBarComponent';
@@ -14,6 +14,11 @@ function Dashboard() {
       <Layout.Section>
         <RecordTableContainer>
         </RecordTableContainer>
+      </Layout.Section>
+      <Layout.Section>
+        <FooterHelp>
+          Created by Team 3
+        </FooterHelp>
       </Layout.Section>
     </Page>
   );
