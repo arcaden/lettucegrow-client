@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createRecord } from '../services/recordsSlice';
 import { Modal, Form, FormLayout, TextField, Button, DropZone, LegacyStack, Thumbnail, Text, Select, LegacyCard, Scrollable, Columns } from '@shopify/polaris';
 import { getLatestMeasurements } from '../services/measurementSlice';
+import { NoteMinor } from '@shopify/polaris-icons';
 import Constants from '../constants';
 
 
@@ -22,9 +23,6 @@ const CreateRecordForm = () => {
         note: '',
         photo: undefined,
     });
-
-    const [files, setFiles] = useState([]);
-    const [rejectedFiles, setRejectedFiles] = useState([]);
 
     const [selected, setSelected] = useState('today');
 
@@ -104,9 +102,9 @@ const CreateRecordForm = () => {
 
     const handleWaterChange = (event) => {
         let water = false
-		if (event == "true") {
-			water = true
-		}
+        if (event == "true") {
+            water = true
+        }
         setFormData((prevFormData) => ({
             ...prevFormData,
             water: water,
@@ -127,32 +125,34 @@ const CreateRecordForm = () => {
         }));
     };
 
-    const handleDrop = useCallback(
-        (_droppedFiles, acceptedFiles, rejectedFiles) => {
-            setFiles((files) => [...files, ...acceptedFiles]);
-            setRejectedFiles(rejectedFiles);
-        },
+    const [file, setFile] = useState();
+
+    const handleDropZoneDrop = useCallback(
+        (_dropFiles, acceptedFiles, _rejectedFiles) =>
+            setFile(acceptedFiles[0]),
         [],
     );
 
-    const fileUpload = !files.length && <DropZone.FileUpload />;
-    const uploadedFiles = files.length > 0 && (
-        <LegacyStack vertical>
-            {files.map((file, index) => (
-                <LegacyStack alignment="center" key={index}>
-                    <Thumbnail
-                        size="small"
-                        alt={file.name}
-                        source={window.URL.createObjectURL(file)}
-                    />
-                    <div>
-                        {file.name}{' '}
-                        <Text variant="bodySm" as="p">
-                            {file.size} bytes
-                        </Text>
-                    </div>
-                </LegacyStack>
-            ))}
+    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+
+    const fileUpload = !file && <DropZone.FileUpload />;
+    const uploadedFile = file && (
+        <LegacyStack>
+            <Thumbnail
+                size="small"
+                alt={file.name}
+                source={
+                    validImageTypes.includes(file.type)
+                        ? window.URL.createObjectURL(file)
+                        : NoteMinor
+                }
+            />
+            <div>
+                {file.name}{' '}
+                <Text variant="bodySm" as="p">
+                    {file.size} bytes
+                </Text>
+            </div>
         </LegacyStack>
     );
 
@@ -161,45 +161,46 @@ const CreateRecordForm = () => {
 
     const handleSubmit = (event, pods) => {
         event.preventDefault();
+        console.log(file)
         dispatch(createRecord({
             ...formData,
-            photo: files
+            photo: file
         }, Constants.POD_ID));
         handleChange()
         setFormData(() => ({
-			name: "",
-			start_ph: "",
-			end_ph: "",
-			start_ec: "",
-			end_ec: "",
-			ph_up: "",
-			ph_down: "",
-			start_ppm: "",
-			end_ppm: "",
-			water: "",
-			temperature: "",
-			note: "",
-			photo: "",
-		}));
+            name: "",
+            start_ph: "",
+            end_ph: "",
+            start_ec: "",
+            end_ec: "",
+            ph_up: "",
+            ph_down: "",
+            start_ppm: "",
+            end_ppm: "",
+            water: "",
+            temperature: "",
+            note: "",
+            photo: "",
+        }));
     };
 
     const handleClose = () => {
         handleChange()
         setFormData(() => ({
-			name: "",
-			start_ph: "",
-			end_ph: "",
-			start_ec: "",
-			end_ec: "",
-			ph_up: "",
-			ph_down: "",
-			start_ppm: "",
-			end_ppm: "",
-			water: "",
-			temperature: "",
-			note: "",
-			photo: "",
-		}));
+            name: "",
+            start_ph: "",
+            end_ph: "",
+            start_ec: "",
+            end_ec: "",
+            ph_up: "",
+            ph_down: "",
+            start_ppm: "",
+            end_ppm: "",
+            water: "",
+            temperature: "",
+            note: "",
+            photo: null,
+        }));
     };
 
     const pods = useSelector((state) => state.pods);
@@ -267,10 +268,10 @@ const CreateRecordForm = () => {
         }
     }
 
-    const activator = 
-    <div style={{color: '#2C6ECB'}}>
-        <Button monochrome outline onClick={handleChange}>Add Adjustment</Button>
-    </div> 
+    const activator =
+        <div style={{ color: '#2C6ECB' }}>
+            <Button monochrome outline onClick={handleChange}>Add Adjustment</Button>
+        </div>
 
     function handleGetStartPh() {
         dispatch(getLatestMeasurements())
@@ -328,16 +329,10 @@ const CreateRecordForm = () => {
                 <Modal.Section>
                     <Form onSubmit={() => handleSubmit} implicitSubmit={false}>
                         <FormLayout>
-
-                            <DropZone accept="image/*"
-                                type="image"
-                                onDrop={handleDrop}
-                                label="Image"
-                            >
-                                {uploadedFiles}
+                            <DropZone allowMultiple={false} onDrop={handleDropZoneDrop}>
+                                {uploadedFile}
                                 {fileUpload}
                             </DropZone>
-
                             <TextField
                                 value={formData.name}
                                 onChange={handleNameChange}

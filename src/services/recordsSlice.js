@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import Constants from '../constants'
 
+const FormData = require('form-data');
+
 export const recordsSlice = createSlice({
   name: 'records',
   initialState: [],
@@ -61,7 +63,14 @@ export const createRecord = (record, pod_id) => async (dispatch, getState) => {
   try {
     const { auth } = getState();
     const { pods } = getState();
-    const response = await axios.post(Constants.NGROK_URL + `/records/${pod_id}`, { ...record }, {
+    let form = new FormData();
+    for (const [key, value] of Object.entries(record)) {
+      if (key != 'photo')
+      form.append(key, value)
+    }
+    form.append('photo', record.photo, record.photo.name);
+    
+    const response = await axios.post(Constants.NGROK_URL + `/records/${pod_id}`, form, {
       headers: {
         Authorization: `${auth.token}`,
       },
