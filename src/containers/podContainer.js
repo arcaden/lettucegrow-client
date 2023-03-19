@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getGardenPods, createPod, updatePod } from '../services/podSlice';
 import { getLatestMeasurements } from '../services/measurementSlice';
-import { LegacyStack, LegacyCard, Button, Columns, Modal, Text, Frame } from '@shopify/polaris';
+import { LegacyStack, LegacyCard, Button, Columns, Modal, Text, Frame, Spinner} from '@shopify/polaris';
 import { getGardens, loadInitalState } from '../services/gardenSlice';
 import ModalExample from '../components/UpdatePodModal';
 import UpdatePodModal from '../components/UpdatePodModal';
@@ -46,8 +46,13 @@ const PodContainer = () => {
 	let title = pods.length > 0 ? active_pod[0].label : "Please Refresh"
 	let last_refresh_time = phMeasurements.length === 0 ? "Please Refresh Value" : phMeasurements[0].created_at
 
+	const [isLoading, setIsLoading] = useState(false);
+
 	const handleGetGardens = () => {
-		dispatch(loadInitalState());
+		setIsLoading(true);
+		dispatch(loadInitalState()).then(() => {
+			setIsLoading(false);
+		});
 	};
 
 	function phDisplayValue() {
@@ -168,7 +173,7 @@ const PodContainer = () => {
 						</LegacyStack>
 
 						<LegacyStack distribution="trailing">
-							<Button primary onClick={handleGetGardens}> Refresh </Button>
+							{isLoading ? <Spinner></Spinner> : <Button primary onClick={handleGetGardens}> Refresh </Button>}
 							<UpdatePodModal pod={active_pod[0]} />
 						</LegacyStack>
 					</LegacyStack>
