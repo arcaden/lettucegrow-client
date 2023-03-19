@@ -211,16 +211,13 @@ export default function RecordTableContainer() {
 		console.log("Clicked")
 	}
 
-	function renderThumbnail(photos){
-		if (photos.length != 0){
-			return (<Thumbnail source={photos[0]} />)
+	function renderThumbnail(photo){
+		if (photo != undefined){
+			return (<Thumbnail source={photo} />)
 		} else{
 			return (<Icon source={ImagesMajor}></Icon>)
 		}
 	}
-	console.log("RECORDS DATA")
-	console.log(recordsData)
-	console.log("RECORDS DATA")
 	
 	const rowMarkup = recordsData.map(
 		({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water, photos }, index) => (

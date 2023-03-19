@@ -20,7 +20,7 @@ const CreateRecordForm = () => {
         water: '',
         temperature: '',
         note: '',
-        image: undefined,
+        photo: undefined,
     });
 
     const [files, setFiles] = useState([]);
@@ -163,7 +163,7 @@ const CreateRecordForm = () => {
         event.preventDefault();
         dispatch(createRecord({
             ...formData,
-            images: files
+            photo: files
         }, Constants.POD_ID));
         handleChange()
         setFormData(() => ({
@@ -179,7 +179,7 @@ const CreateRecordForm = () => {
 			water: "",
 			temperature: "",
 			note: "",
-			image: [],
+			photo: "",
 		}));
     };
 
@@ -198,7 +198,7 @@ const CreateRecordForm = () => {
 			water: "",
 			temperature: "",
 			note: "",
-			image: [],
+			photo: "",
 		}));
     };
 

@@ -20,7 +20,7 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 		water: water,
 		temperature: temperature,
 		note: '',
-		image: photos,
+		photo: photos,
 	}
 
 	const dispatch = useDispatch();
@@ -105,17 +105,20 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 
 	function handleSubmit() {
 		const data = {
-			start_ph: start_ph,
-			end_ph: end_ph,
-			start_ec: start_ec,
-			end_ec: end_ec,
-			ph_up: ph_up,
-			ph_down: ph_down,
-			water: water,
-			temperature: temperature,
+			start_ph: formData.start_ph,
+			end_ph: formData.end_ph,
+			start_ec: formData.start_ec,
+			end_ec: formData.end_ec,
+			ph_up: formData.ph_up,
+			ph_down: formData.ph_down,
+			water: formData.water,
+			temperature: formData.temperature,
 			note: '',
-			image: photos,
+			photo: formData.photo,
 		}
+		console.log("UPDATING HERE ")
+		console.log(data)
+		console.log("######")
 		dispatch(updateRecordById(id, data));
 		handleChange()
 	}
@@ -126,23 +129,19 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 	}
 
 	function getFirstImage() {
-		if (formData.image.length == 0) {
-			return <p>No Image</p>
-		} else {
-			return (
-				<img
-					alt=""
-					width="100%"
-					height="100%"
-					style={{
-						objectFit: 'contain',
-						objectPosition: 'center',
-						paddingLeft: '20px',
-					}}
-					src={formData.image[0]}
-				/>
-			)
-		}
+		return (
+			<img
+				alt=""
+				width="100%"
+				height="100%"
+				style={{
+					objectFit: 'contain',
+					objectPosition: 'center',
+					paddingLeft: '20px',
+				}}
+				src={formData.photo}
+			/>
+		)
 	}
 
 	const activator = <Button onClick={toggleEditPod}>View More</Button>;
