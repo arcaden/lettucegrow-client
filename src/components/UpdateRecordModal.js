@@ -1,15 +1,16 @@
 import { Select, Button, Modal, Form, FormLayout, TextField, Columns, LegacyStack, LegacyCard } from '@shopify/polaris';
 import { useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateRecordById } from '../services/recordsSlice';
+import { getRecords, updateRecordById } from '../services/recordsSlice';
 import { deleteRecordById } from '../services/recordsSlice';
+import Constants from '../constants';
 
 function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water, photos }) {
 
 	let intitalState = {
 		name: user.name,
 		start_ph: start_ph,
-		end_ph: end_ec,
+		end_ph: end_ph,
 		start_ec: start_ec,
 		end_ec: end_ec,
 		ph_up: ph_up,
@@ -21,6 +22,7 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 		note: '',
 		image: photos,
 	}
+
 	const dispatch = useDispatch();
 	const [active, setActive] = useState(false);
 	const [formData, setFormData] = useState({
@@ -102,7 +104,19 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 	}
 
 	function handleSubmit() {
-		dispatch(updateRecordById(id, formData));
+		const data = {
+			start_ph: start_ph,
+			end_ph: end_ph,
+			start_ec: start_ec,
+			end_ec: end_ec,
+			ph_up: ph_up,
+			ph_down: ph_down,
+			water: water,
+			temperature: temperature,
+			note: '',
+			image: photos,
+		}
+		dispatch(updateRecordById(id, data));
 		handleChange()
 	}
 
@@ -205,7 +219,7 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 								type="text"
 							/>
 							<Select
-								label="H20"
+								label="Water"
 								options={[{ label: 'Yes', value: true },
 								{ label: 'No', value: false }]}
 								onChange={handleWaterChange}

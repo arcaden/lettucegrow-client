@@ -25,11 +25,11 @@ export const recordsSlice = createSlice({
 export const { setRecords, addRecord, updateRecord, deleteRecord } = recordsSlice.actions;
 
 
-export const getRecords = () => async (dispatch, getState) => {
+export const getRecords = (pod_id) => async (dispatch, getState) => {
   try {
     console.log(getState())
     const { auth } = getState();
-    const response = await axios.get(Constants.NGROK_URL + '/records/1', {
+    const response = await axios.get(Constants.NGROK_URL + `/records/${pod_id}`, {
       headers: {
         Authorization: `${auth.token}`,
       },
@@ -49,6 +49,8 @@ export const getPodRecords = (pod_id) => async (dispatch, getState) => {
         Authorization: `${auth.token}`,
       },
     });
+    console.log("REPONSE WHEN ")
+    console.log(response)
     dispatch(setRecords(response.data));
   } catch (error) {
     console.error(error);
@@ -59,7 +61,7 @@ export const createRecord = (record, pod_id) => async (dispatch, getState) => {
   try {
     const { auth } = getState();
     const { pods } = getState();
-    const response = await axios.post(Constants.NGROK_URL + `/records/${pods.activePodId}`, { record }, {
+    const response = await axios.post(Constants.NGROK_URL + `/records/${pod_id}`, { ...record }, {
       headers: {
         Authorization: `${auth.token}`,
       },
@@ -73,12 +75,16 @@ export const createRecord = (record, pod_id) => async (dispatch, getState) => {
 export const updateRecordById = (id, record) => async (dispatch, getState) => {
   try {
     const { auth } = getState();
-    const response = await axios.put(`/api/records/${id}`, { record }, {
+    console.log("UPDATING")
+    console.log(record)
+    console.log("######")
+    const response = await axios.patch(Constants.NGROK_URL + `/record/${id}`, { body: {...record }}, {
       headers: {
         Authorization: `${auth.token}`,
       },
     });
     dispatch(updateRecord(response.data));
+    dispatch(getRecords(Constants.POD_ID));
   } catch (error) {
     console.error(error);
   }
@@ -87,12 +93,13 @@ export const updateRecordById = (id, record) => async (dispatch, getState) => {
 export const deleteRecordById = (id) => async (dispatch, getState) => {
   try {
     const { auth } = getState();
-    const response = await axios.delete(`/api/records/${id}`, {
+    const response = await axios.delete(Constants.NGROK_URL + `/record/${id}`, {
       headers: {
         Authorization: `${auth.token}`,
       },
     });
     dispatch(deleteRecord(response.data));
+    dispatch(getRecords(Constants.POD_ID));
   } catch (error) {
     console.error(error);
   }

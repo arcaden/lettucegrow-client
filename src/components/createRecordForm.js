@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createRecord } from '../services/recordsSlice';
 import { Modal, Form, FormLayout, TextField, Button, DropZone, LegacyStack, Thumbnail, Text, Select, LegacyCard, Scrollable, Columns } from '@shopify/polaris';
 import { getLatestMeasurements } from '../services/measurementSlice';
+import Constants from '../constants';
 
 
 const CreateRecordForm = () => {
@@ -19,7 +20,7 @@ const CreateRecordForm = () => {
         water: '',
         temperature: '',
         note: '',
-        image: null,
+        image: undefined,
     });
 
     const [files, setFiles] = useState([]);
@@ -61,6 +62,7 @@ const CreateRecordForm = () => {
         setFormData((prevFormData) => ({
             ...prevFormData,
             start_ec: event,
+            start_ppm: event
         }));
     };
 
@@ -68,6 +70,7 @@ const CreateRecordForm = () => {
         setFormData((prevFormData) => ({
             ...prevFormData,
             end_ec: event,
+            end_ppm: event,
         }));
     };
 
@@ -100,9 +103,13 @@ const CreateRecordForm = () => {
     };
 
     const handleWaterChange = (event) => {
+        let water = false
+		if (event == "true") {
+			water = true
+		}
         setFormData((prevFormData) => ({
             ...prevFormData,
-            water: event,
+            water: water,
         }));
     };
 
@@ -157,7 +164,42 @@ const CreateRecordForm = () => {
         dispatch(createRecord({
             ...formData,
             images: files
-        }));
+        }, Constants.POD_ID));
+        handleChange()
+        setFormData(() => ({
+			name: "",
+			start_ph: "",
+			end_ph: "",
+			start_ec: "",
+			end_ec: "",
+			ph_up: "",
+			ph_down: "",
+			start_ppm: "",
+			end_ppm: "",
+			water: "",
+			temperature: "",
+			note: "",
+			image: [],
+		}));
+    };
+
+    const handleClose = () => {
+        handleChange()
+        setFormData(() => ({
+			name: "",
+			start_ph: "",
+			end_ph: "",
+			start_ec: "",
+			end_ec: "",
+			ph_up: "",
+			ph_down: "",
+			start_ppm: "",
+			end_ppm: "",
+			water: "",
+			temperature: "",
+			note: "",
+			image: [],
+		}));
     };
 
     const pods = useSelector((state) => state.pods);
@@ -230,21 +272,37 @@ const CreateRecordForm = () => {
         <Button monochrome outline onClick={handleChange}>Add Adjustment</Button>
     </div> 
 
-    function handleGetStartValues() {
+    function handleGetStartPh() {
         dispatch(getLatestMeasurements())
         setFormData((prevFormData) => ({
             ...prevFormData,
             start_ph: phMeasurements[0].value,
-            start_ec: ecMeasurements[0].value
         }));
     }
 
-    function handleGetEndValues() {
+    function handleGetStartEc() {
         dispatch(getLatestMeasurements())
         setFormData((prevFormData) => ({
             ...prevFormData,
-            end_ph: phMeasurements[0].value,
-            end_ec: ecMeasurements[0].value
+            start_ec: ecMeasurements[0].value,
+            start_ppm: ecMeasurements[0].value
+        }));
+    }
+
+    function handleGetEndPh() {
+        dispatch(getLatestMeasurements())
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            end_ph: phMeasurements[0].value
+        }));
+    }
+
+    function handleGetEndEc() {
+        dispatch(getLatestMeasurements())
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            end_ec: ecMeasurements[0].value,
+            end_ppm: ecMeasurements[0].value
         }));
     }
 
@@ -252,7 +310,7 @@ const CreateRecordForm = () => {
         <Modal
             activator={activator}
             open={active}
-            onClose={handleChange}
+            onClose={handleClose}
             title={getDate()}
             primaryAction={{
                 content: 'Save',
@@ -262,7 +320,7 @@ const CreateRecordForm = () => {
             secondaryActions={[
                 {
                     content: 'Cancel',
-                    onAction: handleChange,
+                    onAction: handleClose,
                 },
             ]}
         >
@@ -296,7 +354,7 @@ const CreateRecordForm = () => {
                                     />
                                 </LegacyStack.Item>
                                 <LegacyStack.Item>
-                                    <Button onClick={handleGetStartValues}>Take Measurement</Button>
+                                    <Button onClick={handleGetStartPh}>Take Measurement</Button>
                                 </LegacyStack.Item>
                             </LegacyStack>
 
@@ -310,7 +368,7 @@ const CreateRecordForm = () => {
                                     />
                                 </LegacyStack.Item>
                                 <LegacyStack.Item>
-                                    <Button onClick={handleGetEndValues}>Take Measurement</Button>
+                                    <Button onClick={handleGetEndPh}>Take Measurement</Button>
                                 </LegacyStack.Item>
                             </LegacyStack>
 
@@ -337,33 +395,33 @@ const CreateRecordForm = () => {
                             <LegacyStack distribution="leading" alignment="trailing">
                                 <LegacyStack.Item fill>
                                     <TextField
-                                        value={formData.start_ppm}
-                                        onChange={handleStartPpmChange}
+                                        value={formData.start_ec}
+                                        onChange={handleStartEcChange}
                                         label="Start PPM"
                                         type="text"
                                     />
                                 </LegacyStack.Item>
-                                <Button onClick={handleGetStartValues}>Take Measurement</Button>
+                                <Button onClick={handleGetStartEc}>Take Measurement</Button>
                             </LegacyStack>
 
                             <LegacyStack distribution="leading" alignment="trailing">
                                 <LegacyStack.Item fill>
                                     <TextField
-                                        value={formData.end_ppm}
-                                        onChange={handleEndPpmChange}
+                                        value={formData.end_ec}
+                                        onChange={handleEndEcChange}
                                         label="End PPM"
                                         type="text"
                                     />
                                 </LegacyStack.Item>
-                                <Button onClick={handleGetEndValues}>Take Measurement</Button>
+                                <Button onClick={handleGetEndEc}>Take Measurement</Button>
                             </LegacyStack>
 
                             <Select
-                                label="H20"
+                                label="Water"
                                 options={[{ label: 'Yes', value: true },
                                 { label: 'No', value: false }]}
                                 onChange={handleWaterChange}
-                                value={selected}
+                                value={formData.water}
                             />
                         </FormLayout>
                     </Form>

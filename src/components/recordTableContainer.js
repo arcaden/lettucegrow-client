@@ -19,15 +19,22 @@ import { useNavigate } from 'react-router-dom'
 import CreateRecordForm from './createRecordForm';
 import UpdateRecordModal from './UpdateRecordModal';
 import { getRecords } from '../services/recordsSlice';
+import Constants from '../constants';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function RecordTableContainer() {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		if (localStorage.getItem("token") == null) {
 			navigate("/login");
 		}
-	});
+		dispatch(getRecords(Constants.POD_ID))
+	}, [dispatch]);
+
+
+	const recordsData = useSelector((state) => state.records)
 
 	const customers = [
 		{
@@ -51,7 +58,7 @@ export default function RecordTableContainer() {
 		singular: 'customer',
 		plural: 'customers',
 	};
-
+	
 	const records = [
 		{
 			"id": "845e69fc-6e13-4524-99c6-3fb0fbbc509e",
@@ -145,19 +152,18 @@ export default function RecordTableContainer() {
 		}
 	]
 
-
 	const { selectedResources, allResourcesSelected, handleSelectionChange } =
 		useIndexResourceState(customers);
 	const [taggedWith, setTaggedWith] = useState('VIP');
-	const [queryValue, setQueryValue] = useState(null);
+	const [queryValue, setQueryValue] = useState("");
 	const [sortValue, setSortValue] = useState('today');
 
 	const handleTaggedWithChange = useCallback(
 		(value) => setTaggedWith(value),
 		[],
 	);
-	const handleTaggedWithRemove = useCallback(() => setTaggedWith(null), []);
-	const handleQueryValueRemove = useCallback(() => setQueryValue(null), []);
+	const handleTaggedWithRemove = useCallback(() => setTaggedWith(''), []);
+	const handleQueryValueRemove = useCallback(() => setQueryValue(""), []);
 	const handleClearAll = useCallback(() => {
 		handleTaggedWithRemove();
 		handleQueryValueRemove();
@@ -205,7 +211,18 @@ export default function RecordTableContainer() {
 		console.log("Clicked")
 	}
 
-	const rowMarkup = records.map(
+	function renderThumbnail(photos){
+		if (photos.length != 0){
+			return (<Thumbnail source={photos[0]} />)
+		} else{
+			return (<Icon source={ImagesMajor}></Icon>)
+		}
+	}
+	console.log("RECORDS DATA")
+	console.log(recordsData)
+	console.log("RECORDS DATA")
+	
+	const rowMarkup = recordsData.map(
 		({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water, photos }, index) => (
 			<IndexTable.Row
 				id={id}
@@ -214,7 +231,7 @@ export default function RecordTableContainer() {
 			>
 				<IndexTable.Cell onClick={() => console.log("clicked row with id: " + id)}>
 					<Text fontWeight="bold" as="span">
-						<Thumbnail source={photos[0]} />
+						{renderThumbnail(photos)}
 					</Text>
 				</IndexTable.Cell>
 				<IndexTable.Cell>
