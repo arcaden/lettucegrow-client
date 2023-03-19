@@ -20,7 +20,7 @@ const CreateRecordForm = () => {
         end_ppm: '',
         water: '',
         temperature: '',
-        note: '',
+        notes: '',
         photo: undefined,
     });
 
@@ -121,7 +121,7 @@ const CreateRecordForm = () => {
     const handleNoteChange = (event) => {
         setFormData((prevFormData) => ({
             ...prevFormData,
-            note: event,
+            notes: event,
         }));
     };
 
@@ -179,9 +179,9 @@ const CreateRecordForm = () => {
             end_ppm: "",
             water: "",
             temperature: "",
-            note: "",
-            photo: "",
+            notes: "",
         }));
+        setFile(() => null)
     };
 
     const handleClose = () => {
@@ -198,7 +198,7 @@ const CreateRecordForm = () => {
             end_ppm: "",
             water: "",
             temperature: "",
-            note: "",
+            notes: "",
             photo: null,
         }));
     };
@@ -418,6 +418,15 @@ const CreateRecordForm = () => {
                                 onChange={handleWaterChange}
                                 value={formData.water}
                             />
+
+                            <TextField
+                                label="Notes"
+                                value={formData.notes}
+                                onChange={handleNoteChange}
+                                multiline={6}
+                                autoComplete="off"
+                            />
+
                         </FormLayout>
                     </Form>
                 </Modal.Section>
