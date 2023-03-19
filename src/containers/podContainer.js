@@ -69,7 +69,7 @@ const PodContainer = () => {
 						Current pH
 					</Text>
 					<Text variant="heading4xl" color={measurementColor}>
-						{phMeasurements[0].value}
+						{parseFloat(phMeasurements[0].value).toFixed(3)}
 					</Text>
 				</LegacyStack>)
 		}
@@ -80,7 +80,7 @@ const PodContainer = () => {
 			return <p> Please Refresh Value </p>
 		} else {
 			let measurementColor = ""
-			if (Number(ecMeasurements[0].value) < Number(active_pod[0].min_ec) || Number(ecMeasurements[0].value) > Number(active_pod[0].max_ec)) {
+			if (Number(ecMeasurements[0].value)*700 < Number(active_pod[0].min_ec) || Number(ecMeasurements[0].value)*700 > Number(active_pod[0].max_ec)) {
 				measurementColor = "critical"
 			}
 			return (
@@ -89,7 +89,7 @@ const PodContainer = () => {
 						Current PPM
 					</Text>
 					<Text variant="heading4xl" as="h1" color={measurementColor}>
-						{ecMeasurements[0].value}
+						{(parseFloat(ecMeasurements[0].value) * 700).toFixed(1)}
 					</Text>
 				</LegacyStack>)
 		}
