@@ -120,7 +120,7 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 			ph_down: formData.ph_down,
 			water: formData.water,
 			temperature: formData.temperature,
-			note: formData.notes,
+			notes: formData.notes,
 			photo: formData.photo,
 		}
 		console.log("UPDATING HERE ")
