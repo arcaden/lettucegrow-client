@@ -24,9 +24,9 @@ export default function TopBarComponent() {
 
     const userMenuMarkup = (
         <TopBar.UserMenu
-            name="Demo"
+            name="Andy Z"
             detail="Demo Pod"
-            initials="D"
+            initials="A"
         />
     );
 
