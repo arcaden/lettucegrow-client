@@ -1,11 +1,11 @@
-import { Select, Button, Modal, Form, FormLayout, TextField, Columns, LegacyStack, LegacyCard } from '@shopify/polaris';
+import { Select, Button, Modal, Text, Form, FormLayout, TextField, Columns, LegacyStack, LegacyCard } from '@shopify/polaris';
 import { useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getRecords, updateRecordById } from '../services/recordsSlice';
 import { deleteRecordById } from '../services/recordsSlice';
 import Constants from '../constants';
 
-function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water, photo }) {
+function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water, photo, notes }) {
 
 	let intitalState = {
 		name: user.name,
@@ -19,7 +19,7 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 		end_ppm: end_ec,
 		water: water,
 		temperature: temperature,
-		note: '',
+		notes: notes,
 		photo: photo,
 	}
 
@@ -89,6 +89,13 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 		}));
 	};
 
+	const handleNoteChange = (event) => {
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            notes: event,
+        }));
+    };
+
 	const handleChange = useCallback(() => setActive(!active), [active]);
 
 	function populateForm() {
@@ -113,7 +120,7 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 			ph_down: formData.ph_down,
 			water: formData.water,
 			temperature: formData.temperature,
-			note: '',
+			note: formData.notes,
 			photo: formData.photo,
 		}
 		console.log("UPDATING HERE ")
@@ -172,12 +179,9 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 				<Modal.Section>
 					<Form onSubmit={() => handleSubmit} implicitSubmit={false}>
 						<FormLayout>
-							<TextField
-								value={formData.name}
-								onChange={handleNameChange}
-								label="Name"
-								type="label"
-							/>
+							<Text variant="headingSm" fontWeight='medium'>
+								Name: {formData.name}
+							</Text>
 
 							<TextField
 								value={formData.start_ph}
@@ -224,6 +228,14 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 								onChange={handleWaterChange}
 								value={formData.water}
 							/>
+
+							<TextField
+                                label="Notes"
+                                value={formData.notes}
+                                onChange={handleNoteChange}
+                                multiline={6}
+                                autoComplete="off"
+                            />
 
 						</FormLayout>
 					</Form>

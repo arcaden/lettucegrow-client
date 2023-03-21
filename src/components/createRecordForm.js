@@ -286,7 +286,7 @@ const CreateRecordForm = () => {
         dispatch(getLatestMeasurements())
         setFormData((prevFormData) => ({
             ...prevFormData,
-            start_ec: ecMeasurements[0].value,
+            start_ec: ecMeasurements[0].value*700,
             start_ppm: ecMeasurements[0].value
         }));
     }
@@ -303,7 +303,7 @@ const CreateRecordForm = () => {
         dispatch(getLatestMeasurements())
         setFormData((prevFormData) => ({
             ...prevFormData,
-            end_ec: ecMeasurements[0].value,
+            end_ec: ecMeasurements[0].value*700,
             end_ppm: ecMeasurements[0].value
         }));
     }
@@ -334,12 +334,9 @@ const CreateRecordForm = () => {
                                 {uploadedFile}
                                 {fileUpload}
                             </DropZone>
-                            <TextField
-                                value={formData.name}
-                                onChange={handleNameChange}
-                                label="Name"
-                                type="text"
-                            />
+                            <Text variant="headingSm" fontWeight='medium'>
+								Name: Andy Z
+							</Text>
                             <LegacyStack alignment='trailing'>
                                 <LegacyStack.Item fill>
                                     <TextField

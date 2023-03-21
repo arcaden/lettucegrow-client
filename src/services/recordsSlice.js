@@ -66,10 +66,13 @@ export const createRecord = (record, pod_id) => async (dispatch, getState) => {
     let form = new FormData();
     for (const [key, value] of Object.entries(record)) {
       if (key != 'photo')
-      form.append(key, value)
+        form.append(key, value)
     }
-    form.append('photo', record.photo, record.photo.name);
-    
+    console.log(record.photo)
+    if (record.photo) {
+      form.append('photo', record.photo, record.photo.name);
+    }
+
     const response = await axios.post(Constants.NGROK_URL + `/records/${pod_id}`, form, {
       headers: {
         Authorization: `${auth.token}`,
@@ -87,7 +90,7 @@ export const updateRecordById = (id, record) => async (dispatch, getState) => {
     console.log("UPDATING")
     console.log(record)
     console.log("######")
-    const response = await axios.patch(Constants.NGROK_URL + `/record/${id}`, { body: {...record }}, {
+    const response = await axios.patch(Constants.NGROK_URL + `/record/${id}`, { body: { ...record } }, {
       headers: {
         Authorization: `${auth.token}`,
       },

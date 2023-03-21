@@ -220,7 +220,7 @@ export default function RecordTableContainer() {
 	}
 	
 	const rowMarkup = recordsData.map(
-		({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water, photo }, index) => (
+		({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, ph_up, ph_down, water, photo, notes }, index) => (
 			<IndexTable.Row
 				id={id}
 				key={id}
@@ -277,11 +277,6 @@ export default function RecordTableContainer() {
 					</Text>
 				</IndexTable.Cell>
 				<IndexTable.Cell>
-					<Text as="span" numeric>
-						{temperature}
-					</Text>
-				</IndexTable.Cell>
-				<IndexTable.Cell>
 					<UpdateRecordModal
 						id={id}
 						user={user}
@@ -290,11 +285,11 @@ export default function RecordTableContainer() {
 						end_ec={end_ec}
 						start_ph={start_ph}
 						end_ph={end_ph}
-						temperature={temperature}
 						ph_up={ph_up}
 						ph_down={ph_down}
 						water={water}
 						photo={photo}
+						notes={notes}
 					/>
 				</IndexTable.Cell>
 			</IndexTable.Row>
@@ -335,7 +330,6 @@ export default function RecordTableContainer() {
 						{ title: 'Start PPM' },
 						{ title: 'End PPM' },
 						{ title: 'H2O' },
-						{ title: 'Temperature' },
 						{ title: ' ' },
 					]}
 				>
