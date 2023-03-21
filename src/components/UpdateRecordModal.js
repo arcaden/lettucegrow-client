@@ -5,7 +5,7 @@ import { getRecords, updateRecordById } from '../services/recordsSlice';
 import { deleteRecordById } from '../services/recordsSlice';
 import Constants from '../constants';
 
-function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water, photos }) {
+function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water, photo }) {
 
 	let intitalState = {
 		name: user.name,
@@ -20,7 +20,7 @@ function UpdateRecordModal({ id, user, created_at, start_ec, end_ec, start_ph, e
 		water: water,
 		temperature: temperature,
 		note: '',
-		photo: photos,
+		photo: photo,
 	}
 
 	const dispatch = useDispatch();

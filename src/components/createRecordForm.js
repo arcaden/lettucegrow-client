@@ -180,6 +180,7 @@ const CreateRecordForm = () => {
             water: "",
             temperature: "",
             notes: "",
+            photo: null
         }));
         setFile(() => null)
     };

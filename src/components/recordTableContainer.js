@@ -75,7 +75,7 @@ export default function RecordTableContainer() {
 			"temperature": "26.0",
 			"ph_up": "100.0",
 			"ph_down": "0.0",
-			"photos": ["https://fydp2.s3.amazonaws.com/test/testPlantImage.jpg"],
+			"photo": ["https://fydp2.s3.amazonaws.com/test/testPlantImage.jpg"],
 			"created_at": "2023-03-05T23:47:07.934Z"
 		},
 		{
@@ -93,7 +93,7 @@ export default function RecordTableContainer() {
 			"temperature": "26.0",
 			"ph_up": "200.0",
 			"ph_down": "0.0",
-			"photos": ["https://fydp2.s3.amazonaws.com/test/testPlantImage.jpg"],
+			"photo": ["https://fydp2.s3.amazonaws.com/test/testPlantImage.jpg"],
 			"created_at": "2023-03-05T23:47:07.942Z"
 		},
 		{
@@ -111,7 +111,7 @@ export default function RecordTableContainer() {
 			"temperature": "25.0",
 			"ph_up": "100.0",
 			"ph_down": "0.0",
-			"photos": ["https://fydp2.s3.amazonaws.com/test/testPlantImage.jpg"],
+			"photo": ["https://fydp2.s3.amazonaws.com/test/testPlantImage.jpg"],
 			"created_at": "2023-03-07T22:20:39.678Z"
 		},
 		{
@@ -129,7 +129,7 @@ export default function RecordTableContainer() {
 			"temperature": "25.0",
 			"ph_up": "100.0",
 			"ph_down": "0.0",
-			"photos": ["https://fydp2.s3.amazonaws.com/test/testPlantImage.jpg"],
+			"photo": ["https://fydp2.s3.amazonaws.com/test/testPlantImage.jpg"],
 			"created_at": "2023-03-07T22:21:30.421Z"
 		},
 		{
@@ -147,7 +147,7 @@ export default function RecordTableContainer() {
 			"temperature": "25.0",
 			"ph_up": "100.0",
 			"ph_down": "0.0",
-			"photos": ["https://fydp2.s3.amazonaws.com/test/testPlantImage.jpg"],
+			"photo": ["https://fydp2.s3.amazonaws.com/test/testPlantImage.jpg"],
 			"created_at": "2023-03-07T22:21:40.967Z"
 		}
 	]
@@ -220,7 +220,7 @@ export default function RecordTableContainer() {
 	}
 	
 	const rowMarkup = recordsData.map(
-		({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water, photos }, index) => (
+		({ id, user, created_at, start_ec, end_ec, start_ph, end_ph, temperature, ph_up, ph_down, water, photo }, index) => (
 			<IndexTable.Row
 				id={id}
 				key={id}
@@ -228,7 +228,7 @@ export default function RecordTableContainer() {
 			>
 				<IndexTable.Cell onClick={() => console.log("clicked row with id: " + id)}>
 					<Text fontWeight="bold" as="span">
-						{renderThumbnail(photos)}
+						{renderThumbnail(photo)}
 					</Text>
 				</IndexTable.Cell>
 				<IndexTable.Cell>
@@ -294,7 +294,7 @@ export default function RecordTableContainer() {
 						ph_up={ph_up}
 						ph_down={ph_down}
 						water={water}
-						photos={photos}
+						photo={photo}
 					/>
 				</IndexTable.Cell>
 			</IndexTable.Row>
