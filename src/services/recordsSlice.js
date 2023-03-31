@@ -10,7 +10,7 @@ export const recordsSlice = createSlice({
   reducers: {
     setRecords: (state, action) => action.payload,
     addRecord: (state, action) => {
-      state.push(action.payload);
+      state.unshift(action.payload);
     },
     updateRecord: (state, action) => {
       const recordIndex = state.findIndex((record) => record.id === action.payload.id);

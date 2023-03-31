@@ -66,7 +66,7 @@ export const loadInitalState = () => async (dispatch, getState) => {
             },
         });
 
-        const measurement_response = await axios.get(Constants.NGROK_URL + `/measurement/refresh/${pod_response.data[0].id}`, {
+        const measurement_response = await axios.get(Constants.NGROK_URL + `/measurement/latest/${pod_response.data[0].id}`, {
             headers: {
                 Authorization: `${auth.token}`,
             },
